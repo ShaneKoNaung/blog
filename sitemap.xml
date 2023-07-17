@@ -1,23 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://ShaneKoNaung.github.io/blog/posts/post-with-code/index.html</loc>
-    <lastmod>2023-07-17T12:00:02.127Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ShaneKoNaung.github.io/blog/posts/welcome2/experiment_tracking.html</loc>
-    <lastmod>2023-07-17T12:00:01.677Z</lastmod>
+    <loc>https://ShaneKoNaung.github.io/blog/posts/mlflow/experiment_tracking.html</loc>
+    <lastmod>2023-07-17T12:11:14.559Z</lastmod>
   </url>
   <url>
     <loc>https://ShaneKoNaung.github.io/blog/about.html</loc>
-    <lastmod>2023-07-17T12:00:00.697Z</lastmod>
+    <lastmod>2023-07-17T12:11:13.638Z</lastmod>
   </url>
   <url>
     <loc>https://ShaneKoNaung.github.io/blog/index.html</loc>
-    <lastmod>2023-07-17T12:00:01.147Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ShaneKoNaung.github.io/blog/posts/welcome/index.html</loc>
-    <lastmod>2023-07-17T12:00:01.917Z</lastmod>
+    <lastmod>2023-07-17T12:11:13.985Z</lastmod>
   </url>
 </urlset>

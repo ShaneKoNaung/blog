@@ -2,9 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/welcome2/experiment_tracking.html",
-      "/posts/post-with-code/index.html",
-      "/posts/welcome/index.html"
+      "/posts/mlflow/experiment_tracking.html"
     ]
   }
 ]
