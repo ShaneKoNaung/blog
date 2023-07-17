@@ -461,30 +461,32 @@ month == 11 : 11</code></pre>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with mlflow.start_run() as run:</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>and wrap up the training inside of it.</p>
-<ul>
-<li><code>set_tag</code> : for tracking metadata</li>
-<li><code>log_param</code> : for logging parameters</li>
-<li><code>log_metric</code> : for logging metric</li>
-</ul>
+<pre><code>- `set_tag` : for tracking metadata
+- `log_param` : for logging parameters
+- `log_metric` : for logging metric</code></pre>
 <p>In the example below, we use <code>set_tag</code> for tracking developer name, <code>log_param</code> for tracking data folder used for training and validation ,and <code>log_metric</code> for tracking validation rmse metric.</p>
-<p>Some other useful methods are : - <code>set_tags</code> : Log a batch of tags for the current run. - <code>log_params</code> : Log a batch of params for the current run. - <code>log_artifact</code> : Log a local file or directory as an artifact of the currently active run. - <code>log_artifacts</code> : Log all the contents of a local directory as artifacts of the run</p>
+<p>Some other useful methods are :</p>
+<pre><code>- `set_tags` : Log a batch of tags for the current run.
+- `log_params` : Log a batch of params for the current run.
+- `log_artifact` : Log a local file or directory as an artifact of the currently active run.
+- `log_artifacts` : Log all the contents of a local directory as artifacts of the run</code></pre>
 <div class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> mlflow.start_run() <span class="im">as</span> run:</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    mlflow.set_tag(<span class="st">"Developer"</span>, <span class="st">"Shane"</span>)</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    mlflow.log_param(<span class="st">"Train-data-path"</span>, <span class="st">"data/green_tripdata_2023-01.parquet"</span>)</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    mlflow.log_param(<span class="st">"Valid-data-path"</span>, <span class="st">"data/green_tripdata_2023-02.parquet"</span>)</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> train(X, y)</span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    preds <span class="op">=</span> model.predict(X_val)</span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>    rmse <span class="op">=</span> mean_squared_error(y_val, preds, squared<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>    mlflow.log_metric(<span class="st">'RMSE'</span>, rmse)</span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>    signature <span class="op">=</span> infer_signature(X_val, preds)</span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>    model_uri <span class="op">=</span> mlflow.sklearn.log_model(model, artifact_path<span class="op">=</span><span class="st">"model"</span>, signature<span class="op">=</span>signature).model_uri</span>
-<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>   </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> mlflow.start_run() <span class="im">as</span> run:</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    mlflow.set_tag(<span class="st">"Developer"</span>, <span class="st">"Shane"</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    mlflow.log_param(<span class="st">"Train-data-path"</span>, <span class="st">"data/green_tripdata_2023-01.parquet"</span>)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    mlflow.log_param(<span class="st">"Valid-data-path"</span>, <span class="st">"data/green_tripdata_2023-02.parquet"</span>)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> train(X, y)</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    preds <span class="op">=</span> model.predict(X_val)</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>    rmse <span class="op">=</span> mean_squared_error(y_val, preds, squared<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>    mlflow.log_metric(<span class="st">'RMSE'</span>, rmse)</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>    signature <span class="op">=</span> infer_signature(X_val, preds)</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>    model_uri <span class="op">=</span> mlflow.sklearn.log_model(model, artifact_path<span class="op">=</span><span class="st">"model"</span>, signature<span class="op">=</span>signature).model_uri</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>   </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -504,8 +506,8 @@ month == 11 : 11</code></pre>
 <section id="model-saving" class="level2">
 <h2 class="anchored" data-anchor-id="model-saving">Model Saving</h2>
 <div class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># signature = infer_signature(X_val, preds)</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co"># mlflow.sklearn.log_model(model, artifact_path="model", signature=signature)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># signature = infer_signature(X_val, preds)</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co"># mlflow.sklearn.log_model(model, artifact_path="model", signature=signature)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Model signatures define input and output schemas for MLflow models. Model signature is obtained here using <code>infer_signature</code>.</p>
 <p>We can log a model using <code>mlflow.&lt;framework&gt;.log_model</code>. In this case, we are using <code>mlflow.sklearn.log_model</code>.</p>
@@ -521,7 +523,7 @@ month == 11 : 11</code></pre>
 <h2 class="anchored" data-anchor-id="auto-logging">Auto Logging</h2>
 <p>We can also do auto logging by using <code>mlflow.&lt;framework&gt;.autolog()</code></p>
 <div class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mlflow.sklearn.autolog()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mlflow.sklearn.autolog()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Autologging is known to be compatible with the following package versions: 0.22.1 &lt;= scikit-learn &lt;= 1.2.2. Autologging may not succeed when used with package versions outside of this range.</p>
 </section>
@@ -529,17 +531,17 @@ month == 11 : 11</code></pre>
 <h2 class="anchored" data-anchor-id="model-loading">Model Loading</h2>
 <p>We have saved the model using <code>log_model</code>. Now, we are going to load that model for prediction.</p>
 <div class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mlflow <span class="im">import</span> MlflowClient</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> MlflowClient(tracking_uri<span class="op">=</span><span class="st">"mlruns"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mlflow <span class="im">import</span> MlflowClient</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> MlflowClient(tracking_uri<span class="op">=</span><span class="st">"mlruns"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>experiments <span class="op">=</span> client.search_experiments()</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> experiment <span class="kw">in</span> experiments:</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Experiment Name : </span><span class="sc">{</span>experiment<span class="sc">.</span>name<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\t</span><span class="ss">Experiment id :</span><span class="sc">{</span>experiment<span class="sc">.</span>experiment_id<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\t</span><span class="ss">Artifact Location :</span><span class="sc">{</span>experiment<span class="sc">.</span>artifact_location<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>experiments <span class="op">=</span> client.search_experiments()</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> experiment <span class="kw">in</span> experiments:</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Experiment Name : </span><span class="sc">{</span>experiment<span class="sc">.</span>name<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\t</span><span class="ss">Experiment id :</span><span class="sc">{</span>experiment<span class="sc">.</span>experiment_id<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\t</span><span class="ss">Artifact Location :</span><span class="sc">{</span>experiment<span class="sc">.</span>artifact_location<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Experiment Name : Experiment-1
     Experiment id :280918629490989571
@@ -553,18 +555,18 @@ Experiment Name : Default
 </div>
 <p>Our experiment’s name is “Experiment-1” and the Experiment id for that is “146920015920581846”.</p>
 <div class="cell" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> experiment <span class="kw">in</span> experiments:</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> experiment.name <span class="op">==</span> <span class="st">"Experiment-1"</span>:</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>        exp <span class="op">=</span> experiment</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> experiment <span class="kw">in</span> experiments:</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> experiment.name <span class="op">==</span> <span class="st">"Experiment-1"</span>:</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>        exp <span class="op">=</span> experiment</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>exp_id <span class="op">=</span> exp.experiment_id</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>runs <span class="op">=</span> client.search_runs(experiment_ids<span class="op">=</span>[exp_id])</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> run <span class="kw">in</span> runs:</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"run name : </span><span class="sc">{</span>run<span class="sc">.</span>info<span class="sc">.</span>run_name<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\t</span><span class="ss">run id : </span><span class="sc">{</span>run<span class="sc">.</span>info<span class="sc">.</span>run_id<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\t</span><span class="ss">rmse : </span><span class="sc">{</span>run<span class="sc">.</span>data<span class="sc">.</span>metrics[<span class="st">'RMSE'</span>]<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>exp_id <span class="op">=</span> exp.experiment_id</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>runs <span class="op">=</span> client.search_runs(experiment_ids<span class="op">=</span>[exp_id])</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> run <span class="kw">in</span> runs:</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"run name : </span><span class="sc">{</span>run<span class="sc">.</span>info<span class="sc">.</span>run_name<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\t</span><span class="ss">run id : </span><span class="sc">{</span>run<span class="sc">.</span>info<span class="sc">.</span>run_id<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\t</span><span class="ss">rmse : </span><span class="sc">{</span>run<span class="sc">.</span>data<span class="sc">.</span>metrics[<span class="st">'RMSE'</span>]<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>run name : charming-toad-155
     run id : 9ed0390d8a4b44dca36f36ee25d20ba4
@@ -573,15 +575,15 @@ Experiment Name : Default
 </div>
 <p>Let’s pick a run_id of the model that we want to load.</p>
 <div class="cell" data-execution_count="23">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>run_id <span class="op">=</span> runs[<span class="dv">0</span>].info.run_id</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>logged_model <span class="op">=</span> <span class="ss">f'runs:/</span><span class="sc">{</span>run_id<span class="sc">}</span><span class="ss">/model'</span></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load model as a PyFuncModel.</span></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>loaded_model <span class="op">=</span> mlflow.pyfunc.load_model(logged_model)</span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict on a Pandas DataFrame.</span></span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>loaded_model.predict(X_val)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>run_id <span class="op">=</span> runs[<span class="dv">0</span>].info.run_id</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>logged_model <span class="op">=</span> <span class="ss">f'runs:/</span><span class="sc">{</span>run_id<span class="sc">}</span><span class="ss">/model'</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load model as a PyFuncModel.</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>loaded_model <span class="op">=</span> mlflow.pyfunc.load_model(logged_model)</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict on a Pandas DataFrame.</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>loaded_model.predict(X_val)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>2023/07/17 18:59:06 WARNING mlflow.pyfunc: Detected one or more mismatches between the model's dependencies and the current Python environment:
  - mlflow (current: 2.4.2, required: mlflow==2.4)
@@ -601,10 +603,10 @@ To fix the mismatches, call `mlflow.pyfunc.get_model_dependencies(model_uri)` to
     - stage transition, and 
     - annotations.</code></pre>
 <div class="cell" data-execution_count="24">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>mlflow.set_tracking_uri(<span class="st">'mlruns/'</span>)</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>model_uri <span class="op">=</span> <span class="ss">f"runs:/</span><span class="sc">{</span>run_id<span class="sc">}</span><span class="ss">/models"</span></span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>mlflow.register_model(model_uri<span class="op">=</span>model_uri, name<span class="op">=</span><span class="st">"nyc-taxi-regressor"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>mlflow.set_tracking_uri(<span class="st">'mlruns/'</span>)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>model_uri <span class="op">=</span> <span class="ss">f"runs:/</span><span class="sc">{</span>run_id<span class="sc">}</span><span class="ss">/models"</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>mlflow.register_model(model_uri<span class="op">=</span>model_uri, name<span class="op">=</span><span class="st">"nyc-taxi-regressor"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Successfully registered model 'nyc-taxi-regressor'.
 2023/07/17 18:59:10 INFO mlflow.tracking._model_registry.client: Waiting up to 300 seconds for model version to finish creation. Model name: nyc-taxi-regressor, version 1
@@ -618,49 +620,49 @@ Created version '1' of model 'nyc-taxi-regressor'.</code></pre>
 <p>We can see that the version of the model is now 1. Since this is the first model registered under this name.</p>
 <p>But It doesn’t have any staging information.</p>
 <div class="cell" data-execution_count="25">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>model_name <span class="op">=</span> <span class="st">"nyc-taxi-regressor"</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>latest_versions <span class="op">=</span> client.get_latest_versions(name<span class="op">=</span>model_name)</span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> version <span class="kw">in</span> latest_versions:</span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"version: </span><span class="sc">{</span>version<span class="sc">.</span>version<span class="sc">}</span><span class="ss">, stage: </span><span class="sc">{</span>version<span class="sc">.</span>current_stage<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>model_name <span class="op">=</span> <span class="st">"nyc-taxi-regressor"</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>latest_versions <span class="op">=</span> client.get_latest_versions(name<span class="op">=</span>model_name)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> version <span class="kw">in</span> latest_versions:</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"version: </span><span class="sc">{</span>version<span class="sc">.</span>version<span class="sc">}</span><span class="ss">, stage: </span><span class="sc">{</span>version<span class="sc">.</span>current_stage<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>version: 1, stage: None</code></pre>
 </div>
 </div>
 <p>We can transition the model version and stages using <code>transition_model_version_stage</code>.</p>
 <div class="cell" data-execution_count="26">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>model_version <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>new_stage <span class="op">=</span> <span class="st">"Staging"</span></span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>client.transition_model_version_stage(</span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>    name<span class="op">=</span>model_name,</span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>    version<span class="op">=</span>model_version,</span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>    stage<span class="op">=</span>new_stage,</span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>    archive_existing_versions<span class="op">=</span><span class="va">False</span></span>
-<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>model_version <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>new_stage <span class="op">=</span> <span class="st">"Staging"</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>client.transition_model_version_stage(</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>    name<span class="op">=</span>model_name,</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>    version<span class="op">=</span>model_version,</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>    stage<span class="op">=</span>new_stage,</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>    archive_existing_versions<span class="op">=</span><span class="va">False</span></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="26">
 <pre><code>&lt;ModelVersion: aliases=[], creation_timestamp=1689596950866, current_stage='Staging', description=None, last_updated_timestamp=1689596955099, name='nyc-taxi-regressor', run_id='9ed0390d8a4b44dca36f36ee25d20ba4', run_link=None, source='/home/shane/mlops-practice/experiment-tracking/mlruns/280918629490989571/9ed0390d8a4b44dca36f36ee25d20ba4/artifacts/models', status='READY', status_message=None, tags={}, user_id=None, version=1&gt;</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="27">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>model_name <span class="op">=</span> <span class="st">"nyc-taxi-regressor"</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>latest_versions <span class="op">=</span> client.get_latest_versions(name<span class="op">=</span>model_name)</span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> version <span class="kw">in</span> latest_versions:</span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"version: </span><span class="sc">{</span>version<span class="sc">.</span>version<span class="sc">}</span><span class="ss">, stage: </span><span class="sc">{</span>version<span class="sc">.</span>current_stage<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>model_name <span class="op">=</span> <span class="st">"nyc-taxi-regressor"</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>latest_versions <span class="op">=</span> client.get_latest_versions(name<span class="op">=</span>model_name)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> version <span class="kw">in</span> latest_versions:</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"version: </span><span class="sc">{</span>version<span class="sc">.</span>version<span class="sc">}</span><span class="ss">, stage: </span><span class="sc">{</span>version<span class="sc">.</span>current_stage<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>version: 1, stage: Staging</code></pre>
 </div>
 </div>
 <p>Now, we can see that the stage of the model is now <code>Staging</code>.</p>
 <div class="cell" data-execution_count="28">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime</span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>date <span class="op">=</span> datetime.today().date()</span>
-<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>client.update_model_version(</span>
-<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>    name<span class="op">=</span>model_name,</span>
-<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>    version<span class="op">=</span>model_version,</span>
-<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>    description<span class="op">=</span><span class="ss">f"The model version </span><span class="sc">{</span>model_version<span class="sc">}</span><span class="ss"> was transitioned to </span><span class="sc">{</span>new_stage<span class="sc">}</span><span class="ss"> on </span><span class="sc">{</span>date<span class="sc">}</span><span class="ss">"</span></span>
-<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>date <span class="op">=</span> datetime.today().date()</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>client.update_model_version(</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>    name<span class="op">=</span>model_name,</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>    version<span class="op">=</span>model_version,</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>    description<span class="op">=</span><span class="ss">f"The model version </span><span class="sc">{</span>model_version<span class="sc">}</span><span class="ss"> was transitioned to </span><span class="sc">{</span>new_stage<span class="sc">}</span><span class="ss"> on </span><span class="sc">{</span>date<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="28">
 <pre><code>&lt;ModelVersion: aliases=[], creation_timestamp=1689596950866, current_stage='Staging', description='The model version 1 was transitioned to Staging on 2023-07-17', last_updated_timestamp=1689596958723, name='nyc-taxi-regressor', run_id='9ed0390d8a4b44dca36f36ee25d20ba4', run_link=None, source='/home/shane/mlops-practice/experiment-tracking/mlruns/280918629490989571/9ed0390d8a4b44dca36f36ee25d20ba4/artifacts/models', status='READY', status_message=None, tags={}, user_id=None, version=1&gt;</code></pre>
 </div>
