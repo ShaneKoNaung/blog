@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://ShaneKoNaung.github.io/blog/posts/data_manipulation_d2l/2.1-Data_Manipulation.html</loc>
-    <lastmod>2023-07-18T16:42:53.331Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ShaneKoNaung.github.io/blog/index.html</loc>
-    <lastmod>2023-07-18T16:42:52.183Z</lastmod>
+    <loc>https://ShaneKoNaung.github.io/blog/posts/mlflow/experiment_tracking.html</loc>
+    <lastmod>2023-07-18T19:04:36.696Z</lastmod>
   </url>
   <url>
     <loc>https://ShaneKoNaung.github.io/blog/about.html</loc>
-    <lastmod>2023-07-18T16:42:51.749Z</lastmod>
+    <lastmod>2023-07-18T19:04:35.613Z</lastmod>
   </url>
   <url>
-    <loc>https://ShaneKoNaung.github.io/blog/posts/mlflow/experiment_tracking.html</loc>
-    <lastmod>2023-07-18T16:42:52.757Z</lastmod>
+    <loc>https://ShaneKoNaung.github.io/blog/index.html</loc>
+    <lastmod>2023-07-18T19:04:36.100Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ShaneKoNaung.github.io/blog/posts/data_manipulation_d2l/2.1-Data_Manipulation.html</loc>
+    <lastmod>2023-07-18T19:04:37.292Z</lastmod>
   </url>
 </urlset>
