@@ -1,5 +1,68 @@
 [
   {
+    "objectID": "posts/data_manipulation_d2l/2.1-Data_Manipulation.html",
+    "href": "posts/data_manipulation_d2l/2.1-Data_Manipulation.html",
+    "title": "Data Manipulation with Pytorch",
+    "section": "",
+    "text": "Notes for chapter 2 section 1 of Dive into deep learning."
+  },
+  {
+    "objectID": "posts/data_manipulation_d2l/2.1-Data_Manipulation.html#getting-started",
+    "href": "posts/data_manipulation_d2l/2.1-Data_Manipulation.html#getting-started",
+    "title": "Data Manipulation with Pytorch",
+    "section": "Getting Started",
+    "text": "Getting Started\n\nimport torch\n\n\ntensor : (possibly multi dimensional) array of numbers\ntensor with one axis : vector\ntensor with two axes : matrix\ntensor with more than two axes k &gt; 2 : kth order tensor\ncreate new tensors populated with values.\narange(n) : create a vector of evenly spaced values, starting at 0 ( included ) and ending at n ( not included ).\nBy default, the interval size is 1.\nstored in main memory for CPU based computations.\n\n\nx = torch.arange(12, dtype=torch.float32)\nx\n\ntensor([ 0.,  1.,  2.,  3.,  4.,  5.,  6.,  7.,  8.,  9., 10., 11.])\n\n\n\nEach value is called element of tensor.\ncan inspect total number of elements using numel method.\n\n\nx.numel()\n\n12\n\n\n\ncan inspect shape of a tensor using shape attribute\n\n\nx.shape\n\ntorch.Size([12])\n\n\n\ncan inspect size of each dim or axis using size method\n\n\nx.size(dim=0)\n\n12\n\n\n\ncan change the shape of a tensor without altering its value using reshape method\nnew tensor becomes a matrix\n\n\nX = x.reshape(4,3)\nX, X.shape\n\n(tensor([[ 0.,  1.,  2.],\n         [ 3.,  4.,  5.],\n         [ 6.,  7.,  8.],\n         [ 9., 10., 11.]]),\n torch.Size([4, 3]))\n\n\n\nwe don’t need to specify all component of reshape.\nsince we already know the size of the tensor, we only need to specify one component.\n\n\nx.reshape(-1, 3), x.reshape(4, -1)\n\n(tensor([[ 0.,  1.,  2.],\n         [ 3.,  4.,  5.],\n         [ 6.,  7.,  8.],\n         [ 9., 10., 11.]]),\n tensor([[ 0.,  1.,  2.],\n         [ 3.,  4.,  5.],\n         [ 6.,  7.,  8.],\n         [ 9., 10., 11.]]))\n\n\n\ntensor initialized to contain all zeros or ones\n\n\ntorch.zeros((2,3,4)), torch.ones((2,3,4))\n\n(tensor([[[0., 0., 0., 0.],\n          [0., 0., 0., 0.],\n          [0., 0., 0., 0.]],\n \n         [[0., 0., 0., 0.],\n          [0., 0., 0., 0.],\n          [0., 0., 0., 0.]]]),\n tensor([[[1., 1., 1., 1.],\n          [1., 1., 1., 1.],\n          [1., 1., 1., 1.]],\n \n         [[1., 1., 1., 1.],\n          [1., 1., 1., 1.],\n          [1., 1., 1., 1.]]]))\n\n\n\ncan also initialzed tensor with elements drawn from a standard Gaussina (normal) distribution with mean 0 and standard deviation 1.\n\n\ntorch.randn(3, 4)\n\ntensor([[ 2.3716, -0.2123, -1.0150,  1.1659],\n        [-1.8146, -0.1514,  0.0144,  0.0529],\n        [-0.0288,  0.2103,  2.7825, -1.1707]])\n\n\n\nFinally, can also construct tensors by giving exact values using (nested) python lists\n\n\ntorch.tensor([[2, 3, 4], [2,4,5]])\n\ntensor([[2, 3, 4],\n        [2, 4, 5]])"
+  },
+  {
+    "objectID": "posts/data_manipulation_d2l/2.1-Data_Manipulation.html#indexing-and-slicing",
+    "href": "posts/data_manipulation_d2l/2.1-Data_Manipulation.html#indexing-and-slicing",
+    "title": "Data Manipulation with Pytorch",
+    "section": "Indexing and Slicing",
+    "text": "Indexing and Slicing\n\nlike python list, we can access tensor elements by indexing (starting with 0)\nnegative indexing to access element based on its position relative to the end\ncan also access a whole range of elements by slicing (X [ start: end] ) , including start and not including end\nFinally, when only one index ( or slice ) is specified for a kth order tensor, it is applied along axis 0.\n\n\nX\n\ntensor([[ 0.,  1.,  2.],\n        [ 3.,  4.,  5.],\n        [ 6.,  7.,  8.],\n        [ 9., 10., 11.]])\n\n\n\nX[-1]\n\ntensor([ 9., 10., 11.])\n\n\n\nX[2:4]\n\ntensor([[ 6.,  7.,  8.],\n        [ 9., 10., 11.]])\n\n\n\nX[2,2]\n\ntensor(8.)\n\n\n\nX[2, :2]\n\ntensor([6., 7.])\n\n\n\ncan also write elements of a matrix by specifying indices\n\n\nX[2,2] = 34\n\n\nX\n\ntensor([[ 0.,  1.,  2.],\n        [ 3.,  4.,  5.],\n        [ 6.,  7., 34.],\n        [ 9., 10., 11.]])\n\n\n\nto assign multiple elements with the same value, we can use indexing on the left hand side\n\n\nX[:2, :] = 22\nX\n\ntensor([[22., 22., 22.],\n        [22., 22., 22.],\n        [ 6.,  7., 34.],\n        [ 9., 10., 11.]])"
+  },
+  {
+    "objectID": "posts/data_manipulation_d2l/2.1-Data_Manipulation.html#operations",
+    "href": "posts/data_manipulation_d2l/2.1-Data_Manipulation.html#operations",
+    "title": "Data Manipulation with Pytorch",
+    "section": "Operations",
+    "text": "Operations\n\nelementwise operations : these apply a standard scalar operation to each element of the tensor\nunary scalar operator : taking one input\n\n\ntorch.exp(x)\n\ntensor([3.5849e+09, 3.5849e+09, 3.5849e+09, 3.5849e+09, 3.5849e+09, 3.5849e+09,\n        4.0343e+02, 1.0966e+03, 5.8346e+14, 8.1031e+03, 2.2026e+04, 5.9874e+04])\n\n\n\nbinary scalar operator : taking two inputs\n\n\nx = torch.tensor([1., 2., 4. , 6.])\ny = torch.tensor([2, 2, 2, 2])\n\nx + y, x - y, x * y, x / y, x ** y\n\n(tensor([3., 4., 6., 8.]),\n tensor([-1.,  0.,  2.,  4.]),\n tensor([ 2.,  4.,  8., 12.]),\n tensor([0.5000, 1.0000, 2.0000, 3.0000]),\n tensor([ 1.,  4., 16., 36.]))\n\n\n\nconcatenate multiple tensors together : stacking them end to end to form a larger tensor.\n\n\nX = torch.arange(12, dtype=torch.float32).reshape((3,4))\nY = torch.tensor([[2., 1, 4, 3], [1, 2, 3, 4], [4, 3, 2, 1]])\ntorch.cat((X, Y), dim=0), torch.cat((X, Y), dim=1)\n\n(tensor([[ 0.,  1.,  2.,  3.],\n         [ 4.,  5.,  6.,  7.],\n         [ 8.,  9., 10., 11.],\n         [ 2.,  1.,  4.,  3.],\n         [ 1.,  2.,  3.,  4.],\n         [ 4.,  3.,  2.,  1.]]),\n tensor([[ 0.,  1.,  2.,  3.,  2.,  1.,  4.,  3.],\n         [ 4.,  5.,  6.,  7.,  1.,  2.,  3.,  4.],\n         [ 8.,  9., 10., 11.,  4.,  3.,  2.,  1.]]))\n\n\n\nconstruct binary tensor via logical statements\n\n\nX == Y\n\ntensor([[False,  True, False,  True],\n        [False, False, False, False],\n        [False, False, False, False]])\n\n\n\nX &lt; Y\n\ntensor([[ True, False,  True, False],\n        [False, False, False, False],\n        [False, False, False, False]])\n\n\n\nX &gt; Y\n\ntensor([[False, False, False, False],\n        [ True,  True,  True,  True],\n        [ True,  True,  True,  True]])\n\n\n\nSumming all the elements in the tensor using sum method\n\n\nX.sum()\n\ntensor(66.)"
+  },
+  {
+    "objectID": "posts/data_manipulation_d2l/2.1-Data_Manipulation.html#broadcasting",
+    "href": "posts/data_manipulation_d2l/2.1-Data_Manipulation.html#broadcasting",
+    "title": "Data Manipulation with Pytorch",
+    "section": "Broadcasting",
+    "text": "Broadcasting\n\ncan now do elementwise binary operations on two tensors with the same shape\nBroadcasting\n\nunder certain conditions, can still perform elementwise binary operations on two tensors with different shapes\n\n\nexpand one or both arrays by copying elements along axes with length 1 so that after the transformation, the two tensors have the same shape.\nperform elementwise operations on the resulting arrays\n\n\n\n\n\na = torch.arange(3).reshape((3, 1))\nb = torch.arange(2).reshape((1,2))\na, b\n\n(tensor([[0],\n         [1],\n         [2]]),\n tensor([[0, 1]]))\n\n\n\na + b\n\ntensor([[0, 1],\n        [1, 2],\n        [2, 3]])\n\n\n\na = torch.arange(6).reshape((3, 2))\nb = torch.arange(9).reshape((3,3))\na, b\n\n(tensor([[0, 1],\n         [2, 3],\n         [4, 5]]),\n tensor([[0, 1, 2],\n         [3, 4, 5],\n         [6, 7, 8]]))\n\n\n\na + b\n\nRuntimeError: The size of tensor a (2) must match the size of tensor b (3) at non-singleton dimension 1\n\n\n\nsingleton dimensions are dimensions of size 1.\n\n\na = torch.ones((2,3,3))\nb = torch.ones((1,1,3))\n\na, b\n\n(tensor([[[1., 1., 1.],\n          [1., 1., 1.],\n          [1., 1., 1.]],\n \n         [[1., 1., 1.],\n          [1., 1., 1.],\n          [1., 1., 1.]]]),\n tensor([[[1., 1., 1.]]]))\n\n\n\na + b\n\ntensor([[[2., 2., 2.],\n         [2., 2., 2.],\n         [2., 2., 2.]],\n\n        [[2., 2., 2.],\n         [2., 2., 2.],\n         [2., 2., 2.]]])\n\n\n\nhow-does-pytorch-broadcasting-work\nPytorch broadcasting semantics\nNumpy Broadcasting Rules"
+  },
+  {
+    "objectID": "posts/data_manipulation_d2l/2.1-Data_Manipulation.html#saving-memory",
+    "href": "posts/data_manipulation_d2l/2.1-Data_Manipulation.html#saving-memory",
+    "title": "Data Manipulation with Pytorch",
+    "section": "Saving Memory",
+    "text": "Saving Memory\n\nrunning operations can cause new memories to be allocated to host results.\nby running Y = Y + X, python dereference the tensor that Y used to point to and instead point Y at the newly allocated memory.\n\n\nbefore = id(Y)\nY = Y + X\nid(Y) == before\n\nFalse\n\n\n\nThis is how to do operations in place.\nno unnecessary memeory allocations\nwe can avoid a memory leak or referring to stale parameters\n\n\nZ = torch.zeros_like(Y)\nprint(f'id(Z) : {id(Z)}')\nZ[:] = X + Y\nprint(f'id(Z) : {id(Z)}')\n\nid(Z) : 140466157769232\nid(Z) : 140466157769232\n\n\n\nbefore = id(X)\nX += Y\nid(X) == before\n\nTrue"
+  },
+  {
+    "objectID": "posts/data_manipulation_d2l/2.1-Data_Manipulation.html#conversion-to-other-python-objects",
+    "href": "posts/data_manipulation_d2l/2.1-Data_Manipulation.html#conversion-to-other-python-objects",
+    "title": "Data Manipulation with Pytorch",
+    "section": "Conversion to other python objects",
+    "text": "Conversion to other python objects\n\nnumpy to torch , torch to numpy\n\n\nA = X.numpy()\nB = torch.from_numpy(A)\ntype(A), type(B)\n\n(numpy.ndarray, torch.Tensor)\n\n\n\nto convert size one torch tensor to python scalar\n\nitem function\npython built-in functions\n\n\n\na = torch.tensor([3.5])\na, a.item(), float(a), int(a)\n\n(tensor([3.5000]), 3.5, 3.5, 3)"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "blog",
+    "section": "",
+    "text": "Data Manipulation with Pytorch\n\n\n\n\n\n\n\npytorch\n\n\n\n\n\n\n\n\n\n\n\nJul 19, 2023\n\n\nShane Ko Naung\n\n\n\n\n\n\n  \n\n\n\n\nExperiment Tracking with MLflow\n\n\n\n\n\n\n\nmlops\n\n\nmlflow\n\n\n\n\n\n\n\n\n\n\n\nJul 17, 2023\n\n\nShane Ko Naung\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "These are just my notes about MLOps, Machine Learning, Deep Learning and Python.\nMy Name is Shane Ko Naung.I am a machine learning engineer from Myanmar."
+  },
+  {
     "objectID": "posts/mlflow/experiment_tracking.html",
     "href": "posts/mlflow/experiment_tracking.html",
     "title": "Experiment Tracking with MLflow",
@@ -82,19 +145,5 @@
     "title": "Experiment Tracking with MLflow",
     "section": "",
     "text": "Model Registry is a centralized model store, a set of APIs and UI. It provides\n    - model lineage, \n    - model versioning, \n    - stage transition, and \n    - annotations.\n\nmlflow.set_tracking_uri('mlruns/')\n\nmodel_uri = f\"runs:/{run_id}/models\"\nmlflow.register_model(model_uri=model_uri, name=\"nyc-taxi-regressor\")\n\nSuccessfully registered model 'nyc-taxi-regressor'.\n2023/07/17 18:59:10 INFO mlflow.tracking._model_registry.client: Waiting up to 300 seconds for model version to finish creation. Model name: nyc-taxi-regressor, version 1\nCreated version '1' of model 'nyc-taxi-regressor'.\n\n\n&lt;ModelVersion: aliases=[], creation_timestamp=1689596950866, current_stage='None', description=None, last_updated_timestamp=1689596950866, name='nyc-taxi-regressor', run_id='9ed0390d8a4b44dca36f36ee25d20ba4', run_link=None, source='/home/shane/mlops-practice/experiment-tracking/mlruns/280918629490989571/9ed0390d8a4b44dca36f36ee25d20ba4/artifacts/models', status='READY', status_message=None, tags={}, user_id=None, version=1&gt;\n\n\nWe have now registered the model under the name of “nyc-taxi-regressor’.\nWe can see that the version of the model is now 1. Since this is the first model registered under this name.\nBut It doesn’t have any staging information.\n\nmodel_name = \"nyc-taxi-regressor\"\nlatest_versions = client.get_latest_versions(name=model_name)\n\nfor version in latest_versions:\n    print(f\"version: {version.version}, stage: {version.current_stage}\")\n\nversion: 1, stage: None\n\n\nWe can transition the model version and stages using transition_model_version_stage.\n\nmodel_version = 1\nnew_stage = \"Staging\"\nclient.transition_model_version_stage(\n    name=model_name,\n    version=model_version,\n    stage=new_stage,\n    archive_existing_versions=False\n)\n\n&lt;ModelVersion: aliases=[], creation_timestamp=1689596950866, current_stage='Staging', description=None, last_updated_timestamp=1689596955099, name='nyc-taxi-regressor', run_id='9ed0390d8a4b44dca36f36ee25d20ba4', run_link=None, source='/home/shane/mlops-practice/experiment-tracking/mlruns/280918629490989571/9ed0390d8a4b44dca36f36ee25d20ba4/artifacts/models', status='READY', status_message=None, tags={}, user_id=None, version=1&gt;\n\n\n\nmodel_name = \"nyc-taxi-regressor\"\nlatest_versions = client.get_latest_versions(name=model_name)\n\nfor version in latest_versions:\n    print(f\"version: {version.version}, stage: {version.current_stage}\")\n\nversion: 1, stage: Staging\n\n\nNow, we can see that the stage of the model is now Staging.\n\nfrom datetime import datetime\n\ndate = datetime.today().date()\nclient.update_model_version(\n    name=model_name,\n    version=model_version,\n    description=f\"The model version {model_version} was transitioned to {new_stage} on {date}\"\n)\n\n&lt;ModelVersion: aliases=[], creation_timestamp=1689596950866, current_stage='Staging', description='The model version 1 was transitioned to Staging on 2023-07-17', last_updated_timestamp=1689596958723, name='nyc-taxi-regressor', run_id='9ed0390d8a4b44dca36f36ee25d20ba4', run_link=None, source='/home/shane/mlops-practice/experiment-tracking/mlruns/280918629490989571/9ed0390d8a4b44dca36f36ee25d20ba4/artifacts/models', status='READY', status_message=None, tags={}, user_id=None, version=1&gt;\n\n\nWe could also add description of the models like datetime information above."
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "These are just my notes about MLOps, Machine Learning, Deep Learning and Python.\nMy Name is Shane Ko Naung.I am a machine learning engineer from Myanmar."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "blog",
-    "section": "",
-    "text": "Experiment Tracking with MLflow\n\n\n\n\n\n\n\nmlops\n\n\nmlflow\n\n\n\n\n\n\n\n\n\n\n\nJul 17, 2023\n\n\nShane Ko Naung\n\n\n\n\n\n\nNo matching items"
   }
 ]
