@@ -2,8 +2,8 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/data_manipulation_d2l/2.1-Data_Manipulation.html",
       "/posts/pandas/2.2-Data_Preprocessing.html",
+      "/posts/data_manipulation_d2l/2.1-Data_Manipulation.html",
       "/posts/mlflow/experiment_tracking.html"
     ]
   }
