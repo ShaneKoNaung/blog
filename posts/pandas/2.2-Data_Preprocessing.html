@@ -242,7 +242,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Comma Separated Values (CSV) files are used for storing tabular (spreadsheet like) data.</li>
 <li>Each line corresponds to one record and consists of several ( comma separated ) fields.</li>
 </ul>
-<div class="cell" data-execution_count="14">
+<div class="cell" data-execution_count="106">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>data_path <span class="op">=</span> Path(<span class="st">'data'</span>)</span>
@@ -259,7 +259,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="st">NA,NA,140000'''</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>import <code>pandas</code> and load the dataset using <code>read_csv</code></p>
-<div class="cell" data-execution_count="15">
+<div class="cell" data-execution_count="107">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.read_csv(data_file)</span>
@@ -277,7 +277,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>In supervised learning, we train models to predict a <code>target</code> value, given some sets of <code>input</code> values. Our first step in preprocessing the dataset is to separate out columns corresponding to <code>input</code> and columns corresponding to <code>target</code> values. We can select columns either</p>
 <pre><code>- by name or
 - by using integer-location based indexing (iloc)</code></pre>
-<div class="cell" data-execution_count="16">
+<div class="cell" data-execution_count="108">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>inputs, targets <span class="op">=</span> data.iloc[:, <span class="dv">0</span>:<span class="dv">2</span>], data.iloc[:, <span class="dv">2</span>]</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Inputs </span><span class="ch">\n</span><span class="ss"> </span><span class="sc">{</span>inputs<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Targets </span><span class="ch">\n</span><span class="ss"> </span><span class="sc">{</span>targets<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -304,7 +304,7 @@ Name: Price, dtype: int64</code></pre>
 </ul>
 <p>For categorical input fields like “RoofType”, we can treat <code>NaN</code> as a category.</p>
 <p>We can use <code>pd.get_dummies()</code> to convert this column into two separate columns.”RootType” column is now separated into “RoofType_Slate” and “RootType_nan”.</p>
-<div class="cell" data-execution_count="17">
+<div class="cell" data-execution_count="109">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Before Imputation'</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(inputs)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -328,7 +328,7 @@ After Category Imputation
 </div>
 </div>
 <p>For numerical missing value, one common way is to replace <code>NaN</code> entries with the mean value of the corresponding column.</p>
-<div class="cell" data-execution_count="18">
+<div class="cell" data-execution_count="110">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>inputs <span class="op">=</span> inputs.fillna(inputs.mean())</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(inputs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -343,12 +343,12 @@ After Category Imputation
 <section id="conversion-to-the-tensor-format" class="level2">
 <h2 class="anchored" data-anchor-id="conversion-to-the-tensor-format">Conversion to the tensor format</h2>
 <p>Now that we have separated inputs and targets columns, we can load them into a tensor.</p>
-<div class="cell" data-execution_count="19">
+<div class="cell" data-execution_count="111">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>X, y <span class="op">=</span> torch.tensor(inputs.values), torch.tensor(targets.values)</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>X, y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="19">
+<div class="cell-output cell-output-display" data-execution_count="111">
 <pre><code>(tensor([[3., 0., 1.],
          [2., 0., 1.],
          [4., 1., 0.],
@@ -361,17 +361,17 @@ After Category Imputation
 <section id="minutes-to-pandas" class="level1">
 <h1>10 Minutes to pandas</h1>
 <p>Notes for <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/10min.html">10 minutes to pands</a></p>
-<div class="cell" hidden="true" data-execution_count="1">
+<div class="cell" hidden="true" data-execution_count="112">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="object-creation" class="level2">
 <h2 class="anchored" data-anchor-id="object-creation">Object Creation</h2>
 <p>Creating a <code>Series</code> by passing a list of values</p>
-<div class="cell" hidden="true" data-execution_count="2">
+<div class="cell" hidden="true" data-execution_count="113">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> pd.Series([<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, np.nan, <span class="dv">6</span>, <span class="dv">8</span>])</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>s</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="113">
 <pre><code>0    1.0
 1    3.0
 2    5.0
@@ -382,7 +382,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 <p>Creating a <code>DataFrame</code> by passing a NumPy array, with a datetime index using <code>date_range()</code></p>
-<div class="cell" hidden="true" data-execution_count="3">
+<div class="cell" hidden="true" data-execution_count="114">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>dates <span class="op">=</span> pd.date_range(<span class="st">"20230719"</span>, periods<span class="op">=</span><span class="dv">6</span>)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dates)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -392,10 +392,10 @@ dtype: float64</code></pre>
               dtype='datetime64[ns]', freq='D')</code></pre>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="4">
+<div class="cell" hidden="true" data-execution_count="115">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(np.random.randn(<span class="dv">6</span>,<span class="dv">4</span>), index<span class="op">=</span>dates, columns<span class="op">=</span><span class="bu">list</span>(<span class="st">"ABCD"</span>))</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="115">
 <div>
 
 
@@ -412,45 +412,45 @@ dtype: float64</code></pre>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-19</td>
-<td>-0.111161</td>
-<td>0.166914</td>
-<td>0.193785</td>
-<td>1.071966</td>
+<td>1.285308</td>
+<td>-1.470149</td>
+<td>0.560228</td>
+<td>1.718412</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-20</td>
-<td>0.527643</td>
-<td>0.850008</td>
-<td>-2.145393</td>
-<td>-1.092856</td>
+<td>0.575431</td>
+<td>1.137937</td>
+<td>1.047389</td>
+<td>0.781983</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-21</td>
-<td>-0.295973</td>
-<td>0.681027</td>
-<td>-1.032201</td>
-<td>-1.090513</td>
+<td>-2.190910</td>
+<td>1.870997</td>
+<td>-0.077193</td>
+<td>0.073455</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-22</td>
-<td>0.163666</td>
-<td>-0.607460</td>
-<td>0.301047</td>
-<td>-1.192986</td>
+<td>-0.221982</td>
+<td>-1.067051</td>
+<td>-0.193304</td>
+<td>0.295413</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-23</td>
-<td>-1.079115</td>
-<td>0.877211</td>
-<td>0.023358</td>
-<td>0.027880</td>
+<td>-1.849069</td>
+<td>-0.332361</td>
+<td>0.651033</td>
+<td>-0.900765</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-24</td>
-<td>1.443937</td>
-<td>-1.912616</td>
-<td>0.219415</td>
-<td>0.500132</td>
+<td>0.991580</td>
+<td>1.468794</td>
+<td>0.736791</td>
+<td>-0.636845</td>
 </tr>
 </tbody>
 </table>
@@ -459,7 +459,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 <p>Creating a <code>DataFrame</code> by passing a dictionary of objects</p>
-<div class="cell" hidden="true" data-execution_count="5">
+<div class="cell" hidden="true" data-execution_count="116">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> pd.DataFrame(</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    {</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"A"</span> : <span class="fl">1.</span>,</span>
@@ -472,7 +472,7 @@ dtype: float64</code></pre>
 <span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>df2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
+<div class="cell-output cell-output-display" data-execution_count="116">
 <div>
 
 
@@ -549,9 +549,9 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="6">
+<div class="cell" hidden="true" data-execution_count="117">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>df2.dtypes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
+<div class="cell-output cell-output-display" data-execution_count="117">
 <pre><code>A           float64
 B    datetime64[ns]
 C           float32
@@ -568,9 +568,9 @@ dtype: object</code></pre>
 <li><code>DataFrame.head()</code> : to view top rows</li>
 <li><code>DataFrame.tail()</code> : to view bottom rows</li>
 </ul>
-<div class="cell" hidden="true" data-execution_count="7">
+<div class="cell" hidden="true" data-execution_count="118">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="118">
 <div>
 
 
@@ -587,38 +587,38 @@ dtype: object</code></pre>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-19</td>
-<td>-0.111161</td>
-<td>0.166914</td>
-<td>0.193785</td>
-<td>1.071966</td>
+<td>1.285308</td>
+<td>-1.470149</td>
+<td>0.560228</td>
+<td>1.718412</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-20</td>
-<td>0.527643</td>
-<td>0.850008</td>
-<td>-2.145393</td>
-<td>-1.092856</td>
+<td>0.575431</td>
+<td>1.137937</td>
+<td>1.047389</td>
+<td>0.781983</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-21</td>
-<td>-0.295973</td>
-<td>0.681027</td>
-<td>-1.032201</td>
-<td>-1.090513</td>
+<td>-2.190910</td>
+<td>1.870997</td>
+<td>-0.077193</td>
+<td>0.073455</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-22</td>
-<td>0.163666</td>
-<td>-0.607460</td>
-<td>0.301047</td>
-<td>-1.192986</td>
+<td>-0.221982</td>
+<td>-1.067051</td>
+<td>-0.193304</td>
+<td>0.295413</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-23</td>
-<td>-1.079115</td>
-<td>0.877211</td>
-<td>0.023358</td>
-<td>0.027880</td>
+<td>-1.849069</td>
+<td>-0.332361</td>
+<td>0.651033</td>
+<td>-0.900765</td>
 </tr>
 </tbody>
 </table>
@@ -626,9 +626,9 @@ dtype: object</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="8">
+<div class="cell" hidden="true" data-execution_count="119">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>df.tail(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="119">
 <div>
 
 
@@ -645,24 +645,24 @@ dtype: object</code></pre>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-22</td>
-<td>0.163666</td>
-<td>-0.607460</td>
-<td>0.301047</td>
-<td>-1.192986</td>
+<td>-0.221982</td>
+<td>-1.067051</td>
+<td>-0.193304</td>
+<td>0.295413</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-23</td>
-<td>-1.079115</td>
-<td>0.877211</td>
-<td>0.023358</td>
-<td>0.027880</td>
+<td>-1.849069</td>
+<td>-0.332361</td>
+<td>0.651033</td>
+<td>-0.900765</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-24</td>
-<td>1.443937</td>
-<td>-1.912616</td>
-<td>0.219415</td>
-<td>0.500132</td>
+<td>0.991580</td>
+<td>1.468794</td>
+<td>0.736791</td>
+<td>-0.636845</td>
 </tr>
 </tbody>
 </table>
@@ -670,17 +670,17 @@ dtype: object</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="9">
+<div class="cell" hidden="true" data-execution_count="120">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>df.index</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="120">
 <pre><code>DatetimeIndex(['2023-07-19', '2023-07-20', '2023-07-21', '2023-07-22',
                '2023-07-23', '2023-07-24'],
               dtype='datetime64[ns]', freq='D')</code></pre>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="10">
+<div class="cell" hidden="true" data-execution_count="121">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>df.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="10">
+<div class="cell-output cell-output-display" data-execution_count="121">
 <pre><code>Index(['A', 'B', 'C', 'D'], dtype='object')</code></pre>
 </div>
 </div>
@@ -706,30 +706,30 @@ Side Note about %time and %%time
 </div>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="11">
+<div class="cell" hidden="true" data-execution_count="122">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>time</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>df.to_numpy()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>CPU times: user 20 µs, sys: 19 µs, total: 39 µs
-Wall time: 41 µs</code></pre>
+<pre><code>CPU times: user 33 µs, sys: 13 µs, total: 46 µs
+Wall time: 52.2 µs</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="11">
-<pre><code>array([[-0.11116127,  0.16691402,  0.19378469,  1.07196565],
-       [ 0.52764337,  0.85000843, -2.1453925 , -1.09285636],
-       [-0.29597326,  0.68102652, -1.03220127, -1.09051285],
-       [ 0.16366561, -0.60746034,  0.30104705, -1.19298591],
-       [-1.07911538,  0.87721105,  0.02335771,  0.02788001],
-       [ 1.44393719, -1.91261559,  0.2194151 ,  0.50013158]])</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="122">
+<pre><code>array([[ 1.28530808, -1.47014859,  0.56022846,  1.71841208],
+       [ 0.57543141,  1.13793654,  1.04738916,  0.78198281],
+       [-2.19090989,  1.8709974 , -0.07719255,  0.07345542],
+       [-0.22198165, -1.06705061, -0.19330432,  0.29541317],
+       [-1.84906933, -0.33236121,  0.65103336, -0.9007653 ],
+       [ 0.99157987,  1.46879422,  0.73679074, -0.6368451 ]])</code></pre>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="12">
+<div class="cell" hidden="true" data-execution_count="123">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>time</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>df2.to_numpy()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>CPU times: user 350 µs, sys: 319 µs, total: 669 µs
-Wall time: 642 µs</code></pre>
+<pre><code>CPU times: user 683 µs, sys: 257 µs, total: 940 µs
+Wall time: 970 µs</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="12">
+<div class="cell-output cell-output-display" data-execution_count="123">
 <pre><code>array([[1.0, Timestamp('2023-07-21 00:00:00'), 1.0, 3, 'test', 'foo'],
        [1.0, Timestamp('2023-07-21 00:00:00'), 1.0, 3, 'train', 'foo'],
        [1.0, Timestamp('2023-07-21 00:00:00'), 1.0, 3, 'test', 'foo'],
@@ -741,9 +741,9 @@ Wall time: 642 µs</code></pre>
 </div>
 <p><code>DataFrame.to_numpy()</code> does not include the index or column labels in the output.</p>
 <p><code>describe()</code> shows a quick statistics summary of data.</p>
-<div class="cell" hidden="true" data-execution_count="13">
+<div class="cell" hidden="true" data-execution_count="124">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>df.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="13">
+<div class="cell-output cell-output-display" data-execution_count="124">
 <div>
 
 
@@ -767,52 +767,52 @@ Wall time: 642 µs</code></pre>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">mean</td>
-<td>0.108166</td>
-<td>0.009181</td>
-<td>-0.406665</td>
-<td>-0.296063</td>
+<td>-0.234940</td>
+<td>0.268028</td>
+<td>0.454157</td>
+<td>0.221942</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">std</td>
-<td>0.846687</td>
-<td>1.096382</td>
-<td>0.985166</td>
-<td>0.967561</td>
+<td>1.476727</td>
+<td>1.409415</td>
+<td>0.486489</td>
+<td>0.956922</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">min</td>
-<td>-1.079115</td>
-<td>-1.912616</td>
-<td>-2.145393</td>
-<td>-1.192986</td>
+<td>-2.190910</td>
+<td>-1.470149</td>
+<td>-0.193304</td>
+<td>-0.900765</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">25%</td>
-<td>-0.249770</td>
-<td>-0.413867</td>
-<td>-0.768312</td>
-<td>-1.092270</td>
+<td>-1.442297</td>
+<td>-0.883378</td>
+<td>0.082163</td>
+<td>-0.459270</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">50%</td>
-<td>0.026252</td>
-<td>0.423970</td>
-<td>0.108571</td>
-<td>-0.531316</td>
+<td>0.176725</td>
+<td>0.402788</td>
+<td>0.605631</td>
+<td>0.184434</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">75%</td>
-<td>0.436649</td>
-<td>0.807763</td>
-<td>0.213007</td>
-<td>0.382069</td>
+<td>0.887543</td>
+<td>1.386080</td>
+<td>0.715351</td>
+<td>0.660340</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">max</td>
-<td>1.443937</td>
-<td>0.877211</td>
-<td>0.301047</td>
-<td>1.071966</td>
+<td>1.285308</td>
+<td>1.870997</td>
+<td>1.047389</td>
+<td>1.718412</td>
 </tr>
 </tbody>
 </table>
@@ -821,9 +821,9 @@ Wall time: 642 µs</code></pre>
 </div>
 </div>
 <p>Transposing data</p>
-<div class="cell" hidden="true" data-execution_count="14">
+<div class="cell" hidden="true" data-execution_count="125">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>df.T</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="14">
+<div class="cell-output cell-output-display" data-execution_count="125">
 <div>
 
 
@@ -842,39 +842,39 @@ Wall time: 642 µs</code></pre>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">A</td>
-<td>-0.111161</td>
-<td>0.527643</td>
-<td>-0.295973</td>
-<td>0.163666</td>
-<td>-1.079115</td>
-<td>1.443937</td>
+<td>1.285308</td>
+<td>0.575431</td>
+<td>-2.190910</td>
+<td>-0.221982</td>
+<td>-1.849069</td>
+<td>0.991580</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">B</td>
-<td>0.166914</td>
-<td>0.850008</td>
-<td>0.681027</td>
-<td>-0.607460</td>
-<td>0.877211</td>
-<td>-1.912616</td>
+<td>-1.470149</td>
+<td>1.137937</td>
+<td>1.870997</td>
+<td>-1.067051</td>
+<td>-0.332361</td>
+<td>1.468794</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">C</td>
-<td>0.193785</td>
-<td>-2.145393</td>
-<td>-1.032201</td>
-<td>0.301047</td>
-<td>0.023358</td>
-<td>0.219415</td>
+<td>0.560228</td>
+<td>1.047389</td>
+<td>-0.077193</td>
+<td>-0.193304</td>
+<td>0.651033</td>
+<td>0.736791</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">D</td>
-<td>1.071966</td>
-<td>-1.092856</td>
-<td>-1.090513</td>
-<td>-1.192986</td>
-<td>0.027880</td>
-<td>0.500132</td>
+<td>1.718412</td>
+<td>0.781983</td>
+<td>0.073455</td>
+<td>0.295413</td>
+<td>-0.900765</td>
+<td>-0.636845</td>
 </tr>
 </tbody>
 </table>
@@ -883,9 +883,9 @@ Wall time: 642 µs</code></pre>
 </div>
 </div>
 <p><code>DataFrame.sort_index()</code> sorts by an index.</p>
-<div class="cell" hidden="true" data-execution_count="15">
+<div class="cell" hidden="true" data-execution_count="126">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>df.sort_index(axis<span class="op">=</span><span class="dv">1</span>, ascending<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="15">
+<div class="cell-output cell-output-display" data-execution_count="126">
 <div>
 
 
@@ -902,45 +902,45 @@ Wall time: 642 µs</code></pre>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-19</td>
-<td>1.071966</td>
-<td>0.193785</td>
-<td>0.166914</td>
-<td>-0.111161</td>
+<td>1.718412</td>
+<td>0.560228</td>
+<td>-1.470149</td>
+<td>1.285308</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-20</td>
-<td>-1.092856</td>
-<td>-2.145393</td>
-<td>0.850008</td>
-<td>0.527643</td>
+<td>0.781983</td>
+<td>1.047389</td>
+<td>1.137937</td>
+<td>0.575431</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-21</td>
-<td>-1.090513</td>
-<td>-1.032201</td>
-<td>0.681027</td>
-<td>-0.295973</td>
+<td>0.073455</td>
+<td>-0.077193</td>
+<td>1.870997</td>
+<td>-2.190910</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-22</td>
-<td>-1.192986</td>
-<td>0.301047</td>
-<td>-0.607460</td>
-<td>0.163666</td>
+<td>0.295413</td>
+<td>-0.193304</td>
+<td>-1.067051</td>
+<td>-0.221982</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-23</td>
-<td>0.027880</td>
-<td>0.023358</td>
-<td>0.877211</td>
-<td>-1.079115</td>
+<td>-0.900765</td>
+<td>0.651033</td>
+<td>-0.332361</td>
+<td>-1.849069</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-24</td>
-<td>0.500132</td>
-<td>0.219415</td>
-<td>-1.912616</td>
-<td>1.443937</td>
+<td>-0.636845</td>
+<td>0.736791</td>
+<td>1.468794</td>
+<td>0.991580</td>
 </tr>
 </tbody>
 </table>
@@ -949,9 +949,9 @@ Wall time: 642 µs</code></pre>
 </div>
 </div>
 <p><code>DataFrame.sort_values()</code> sorts by values.</p>
-<div class="cell" hidden="true" data-execution_count="16">
+<div class="cell" hidden="true" data-execution_count="127">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>df.sort_values(by<span class="op">=</span><span class="st">"D"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="16">
+<div class="cell-output cell-output-display" data-execution_count="127">
 <div>
 
 
@@ -967,46 +967,46 @@ Wall time: 642 µs</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2023-07-22</td>
-<td>0.163666</td>
-<td>-0.607460</td>
-<td>0.301047</td>
-<td>-1.192986</td>
+<td data-quarto-table-cell-role="th">2023-07-23</td>
+<td>-1.849069</td>
+<td>-0.332361</td>
+<td>0.651033</td>
+<td>-0.900765</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">2023-07-20</td>
-<td>0.527643</td>
-<td>0.850008</td>
-<td>-2.145393</td>
-<td>-1.092856</td>
+<td data-quarto-table-cell-role="th">2023-07-24</td>
+<td>0.991580</td>
+<td>1.468794</td>
+<td>0.736791</td>
+<td>-0.636845</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-21</td>
-<td>-0.295973</td>
-<td>0.681027</td>
-<td>-1.032201</td>
-<td>-1.090513</td>
+<td>-2.190910</td>
+<td>1.870997</td>
+<td>-0.077193</td>
+<td>0.073455</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">2023-07-23</td>
-<td>-1.079115</td>
-<td>0.877211</td>
-<td>0.023358</td>
-<td>0.027880</td>
+<td data-quarto-table-cell-role="th">2023-07-22</td>
+<td>-0.221982</td>
+<td>-1.067051</td>
+<td>-0.193304</td>
+<td>0.295413</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2023-07-24</td>
-<td>1.443937</td>
-<td>-1.912616</td>
-<td>0.219415</td>
-<td>0.500132</td>
+<td data-quarto-table-cell-role="th">2023-07-20</td>
+<td>0.575431</td>
+<td>1.137937</td>
+<td>1.047389</td>
+<td>0.781983</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-19</td>
-<td>-0.111161</td>
-<td>0.166914</td>
-<td>0.193785</td>
-<td>1.071966</td>
+<td>1.285308</td>
+<td>-1.470149</td>
+<td>0.560228</td>
+<td>1.718412</td>
 </tr>
 </tbody>
 </table>
@@ -1020,22 +1020,22 @@ Wall time: 642 µs</code></pre>
 <section id="getting" class="level3">
 <h3 class="anchored" data-anchor-id="getting">Getting</h3>
 <p>Selecting a single column - df[“A”] - df.A</p>
-<div class="cell" hidden="true" data-execution_count="17">
+<div class="cell" hidden="true" data-execution_count="128">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"A"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="17">
-<pre><code>2023-07-19   -0.111161
-2023-07-20    0.527643
-2023-07-21   -0.295973
-2023-07-22    0.163666
-2023-07-23   -1.079115
-2023-07-24    1.443937
+<div class="cell-output cell-output-display" data-execution_count="128">
+<pre><code>2023-07-19    1.285308
+2023-07-20    0.575431
+2023-07-21   -2.190910
+2023-07-22   -0.221982
+2023-07-23   -1.849069
+2023-07-24    0.991580
 Freq: D, Name: A, dtype: float64</code></pre>
 </div>
 </div>
 <p>Selecting via <code>[]</code> (<code>__getitem__</code>)</p>
-<div class="cell" hidden="true" data-execution_count="18">
+<div class="cell" hidden="true" data-execution_count="129">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>df[<span class="dv">0</span>:<span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="18">
+<div class="cell-output cell-output-display" data-execution_count="129">
 <div>
 
 
@@ -1052,24 +1052,24 @@ Freq: D, Name: A, dtype: float64</code></pre>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-19</td>
-<td>-0.111161</td>
-<td>0.166914</td>
-<td>0.193785</td>
-<td>1.071966</td>
+<td>1.285308</td>
+<td>-1.470149</td>
+<td>0.560228</td>
+<td>1.718412</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-20</td>
-<td>0.527643</td>
-<td>0.850008</td>
-<td>-2.145393</td>
-<td>-1.092856</td>
+<td>0.575431</td>
+<td>1.137937</td>
+<td>1.047389</td>
+<td>0.781983</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-21</td>
-<td>-0.295973</td>
-<td>0.681027</td>
-<td>-1.032201</td>
-<td>-1.090513</td>
+<td>-2.190910</td>
+<td>1.870997</td>
+<td>-0.077193</td>
+<td>0.073455</td>
 </tr>
 </tbody>
 </table>
@@ -1077,9 +1077,9 @@ Freq: D, Name: A, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="19">
+<div class="cell" hidden="true" data-execution_count="130">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"20230719"</span>:<span class="st">"20230722"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="19">
+<div class="cell-output cell-output-display" data-execution_count="130">
 <div>
 
 
@@ -1096,31 +1096,31 @@ Freq: D, Name: A, dtype: float64</code></pre>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-19</td>
-<td>-0.111161</td>
-<td>0.166914</td>
-<td>0.193785</td>
-<td>1.071966</td>
+<td>1.285308</td>
+<td>-1.470149</td>
+<td>0.560228</td>
+<td>1.718412</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-20</td>
-<td>0.527643</td>
-<td>0.850008</td>
-<td>-2.145393</td>
-<td>-1.092856</td>
+<td>0.575431</td>
+<td>1.137937</td>
+<td>1.047389</td>
+<td>0.781983</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-21</td>
-<td>-0.295973</td>
-<td>0.681027</td>
-<td>-1.032201</td>
-<td>-1.090513</td>
+<td>-2.190910</td>
+<td>1.870997</td>
+<td>-0.077193</td>
+<td>0.073455</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-22</td>
-<td>0.163666</td>
-<td>-0.607460</td>
-<td>0.301047</td>
-<td>-1.192986</td>
+<td>-0.221982</td>
+<td>-1.067051</td>
+<td>-0.193304</td>
+<td>0.295413</td>
 </tr>
 </tbody>
 </table>
@@ -1132,20 +1132,20 @@ Freq: D, Name: A, dtype: float64</code></pre>
 <section id="selection-by-label" class="level3">
 <h3 class="anchored" data-anchor-id="selection-by-label">Selection by label</h3>
 <p>For getting a cross section using a label:</p>
-<div class="cell" hidden="true" data-execution_count="20">
+<div class="cell" hidden="true" data-execution_count="131">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>df.loc[dates[<span class="dv">0</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="20">
-<pre><code>A   -0.111161
-B    0.166914
-C    0.193785
-D    1.071966
+<div class="cell-output cell-output-display" data-execution_count="131">
+<pre><code>A    1.285308
+B   -1.470149
+C    0.560228
+D    1.718412
 Name: 2023-07-19 00:00:00, dtype: float64</code></pre>
 </div>
 </div>
 <p>Selecting on a multi-axis by label</p>
-<div class="cell" hidden="true" data-execution_count="21">
+<div class="cell" hidden="true" data-execution_count="132">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>df.loc[:, [<span class="st">"A"</span>, <span class="st">"B"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="21">
+<div class="cell-output cell-output-display" data-execution_count="132">
 <div>
 
 
@@ -1160,33 +1160,33 @@ Name: 2023-07-19 00:00:00, dtype: float64</code></pre>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-19</td>
-<td>-0.111161</td>
-<td>0.166914</td>
+<td>1.285308</td>
+<td>-1.470149</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-20</td>
-<td>0.527643</td>
-<td>0.850008</td>
+<td>0.575431</td>
+<td>1.137937</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-21</td>
-<td>-0.295973</td>
-<td>0.681027</td>
+<td>-2.190910</td>
+<td>1.870997</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-22</td>
-<td>0.163666</td>
-<td>-0.607460</td>
+<td>-0.221982</td>
+<td>-1.067051</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-23</td>
-<td>-1.079115</td>
-<td>0.877211</td>
+<td>-1.849069</td>
+<td>-0.332361</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-24</td>
-<td>1.443937</td>
-<td>-1.912616</td>
+<td>0.991580</td>
+<td>1.468794</td>
 </tr>
 </tbody>
 </table>
@@ -1195,9 +1195,9 @@ Name: 2023-07-19 00:00:00, dtype: float64</code></pre>
 </div>
 </div>
 <p>showing label slicing, both endpoints are included</p>
-<div class="cell" hidden="true" data-execution_count="22">
+<div class="cell" hidden="true" data-execution_count="133">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="22">
+<div class="cell-output cell-output-display" data-execution_count="133">
 <div>
 
 
@@ -1214,45 +1214,45 @@ Name: 2023-07-19 00:00:00, dtype: float64</code></pre>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-19</td>
-<td>-0.111161</td>
-<td>0.166914</td>
-<td>0.193785</td>
-<td>1.071966</td>
+<td>1.285308</td>
+<td>-1.470149</td>
+<td>0.560228</td>
+<td>1.718412</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-20</td>
-<td>0.527643</td>
-<td>0.850008</td>
-<td>-2.145393</td>
-<td>-1.092856</td>
+<td>0.575431</td>
+<td>1.137937</td>
+<td>1.047389</td>
+<td>0.781983</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-21</td>
-<td>-0.295973</td>
-<td>0.681027</td>
-<td>-1.032201</td>
-<td>-1.090513</td>
+<td>-2.190910</td>
+<td>1.870997</td>
+<td>-0.077193</td>
+<td>0.073455</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-22</td>
-<td>0.163666</td>
-<td>-0.607460</td>
-<td>0.301047</td>
-<td>-1.192986</td>
+<td>-0.221982</td>
+<td>-1.067051</td>
+<td>-0.193304</td>
+<td>0.295413</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-23</td>
-<td>-1.079115</td>
-<td>0.877211</td>
-<td>0.023358</td>
-<td>0.027880</td>
+<td>-1.849069</td>
+<td>-0.332361</td>
+<td>0.651033</td>
+<td>-0.900765</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-24</td>
-<td>1.443937</td>
-<td>-1.912616</td>
-<td>0.219415</td>
-<td>0.500132</td>
+<td>0.991580</td>
+<td>1.468794</td>
+<td>0.736791</td>
+<td>-0.636845</td>
 </tr>
 </tbody>
 </table>
@@ -1260,9 +1260,9 @@ Name: 2023-07-19 00:00:00, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="23">
+<div class="cell" hidden="true" data-execution_count="134">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>df.loc[<span class="st">"20230719"</span> : <span class="st">"20230722"</span>, [<span class="st">"A"</span>, <span class="st">"B"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="23">
+<div class="cell-output cell-output-display" data-execution_count="134">
 <div>
 
 
@@ -1277,23 +1277,23 @@ Name: 2023-07-19 00:00:00, dtype: float64</code></pre>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-19</td>
-<td>-0.111161</td>
-<td>0.166914</td>
+<td>1.285308</td>
+<td>-1.470149</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-20</td>
-<td>0.527643</td>
-<td>0.850008</td>
+<td>0.575431</td>
+<td>1.137937</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-21</td>
-<td>-0.295973</td>
-<td>0.681027</td>
+<td>-2.190910</td>
+<td>1.870997</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-22</td>
-<td>0.163666</td>
-<td>-0.607460</td>
+<td>-0.221982</td>
+<td>-1.067051</td>
 </tr>
 </tbody>
 </table>
@@ -1302,55 +1302,55 @@ Name: 2023-07-19 00:00:00, dtype: float64</code></pre>
 </div>
 </div>
 <p>Reduction in the dimensions of the returned object</p>
-<div class="cell" hidden="true" data-execution_count="24">
+<div class="cell" hidden="true" data-execution_count="135">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>df.loc[<span class="st">"20230722"</span>, [<span class="st">"A"</span>, <span class="st">"B"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="24">
-<pre><code>A    0.163666
-B   -0.607460
+<div class="cell-output cell-output-display" data-execution_count="135">
+<pre><code>A   -0.221982
+B   -1.067051
 Name: 2023-07-22 00:00:00, dtype: float64</code></pre>
 </div>
 </div>
 <p>For getting a scalar value</p>
-<div class="cell" hidden="true" data-execution_count="25">
+<div class="cell" hidden="true" data-execution_count="136">
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>time</span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>df.loc[<span class="st">"20230722"</span>, <span class="st">"A"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>CPU times: user 159 µs, sys: 140 µs, total: 299 µs
-Wall time: 303 µs</code></pre>
+<pre><code>CPU times: user 315 µs, sys: 120 µs, total: 435 µs
+Wall time: 480 µs</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="25">
-<pre><code>0.16366560935804825</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="136">
+<pre><code>-0.2219816547437972</code></pre>
 </div>
 </div>
 <p>For getting fast access to scalar, same as the previous method</p>
-<div class="cell" hidden="true" data-execution_count="26">
+<div class="cell" hidden="true" data-execution_count="137">
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>time</span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>df.at[<span class="st">"20230722"</span>, <span class="st">"A"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>CPU times: user 166 µs, sys: 0 ns, total: 166 µs
-Wall time: 169 µs</code></pre>
+<pre><code>CPU times: user 146 µs, sys: 55 µs, total: 201 µs
+Wall time: 222 µs</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="26">
-<pre><code>0.16366560935804825</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="137">
+<pre><code>-0.2219816547437972</code></pre>
 </div>
 </div>
 </section>
 <section id="selection-by-position" class="level3">
 <h3 class="anchored" data-anchor-id="selection-by-position">Selection by position</h3>
 <p>Select via the position of the passed integers</p>
-<div class="cell" hidden="true" data-execution_count="27">
+<div class="cell" hidden="true" data-execution_count="138">
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>df.iloc[<span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="27">
-<pre><code>A    0.163666
-B   -0.607460
-C    0.301047
-D   -1.192986
+<div class="cell-output cell-output-display" data-execution_count="138">
+<pre><code>A   -0.221982
+B   -1.067051
+C   -0.193304
+D    0.295413
 Name: 2023-07-22 00:00:00, dtype: float64</code></pre>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="28">
+<div class="cell" hidden="true" data-execution_count="139">
 <div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>df.iloc[<span class="dv">3</span>:<span class="dv">5</span>, <span class="dv">0</span>:<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="28">
+<div class="cell-output cell-output-display" data-execution_count="139">
 <div>
 
 
@@ -1365,13 +1365,13 @@ Name: 2023-07-22 00:00:00, dtype: float64</code></pre>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-22</td>
-<td>0.163666</td>
-<td>-0.607460</td>
+<td>-0.221982</td>
+<td>-1.067051</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-23</td>
-<td>-1.079115</td>
-<td>0.877211</td>
+<td>-1.849069</td>
+<td>-0.332361</td>
 </tr>
 </tbody>
 </table>
@@ -1380,9 +1380,9 @@ Name: 2023-07-22 00:00:00, dtype: float64</code></pre>
 </div>
 </div>
 <p>by list of integer positions, similar to NumPy</p>
-<div class="cell" hidden="true" data-execution_count="29">
+<div class="cell" hidden="true" data-execution_count="140">
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>df.iloc[[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>], [<span class="dv">0</span>,<span class="dv">2</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="29">
+<div class="cell-output cell-output-display" data-execution_count="140">
 <div>
 
 
@@ -1397,18 +1397,18 @@ Name: 2023-07-22 00:00:00, dtype: float64</code></pre>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-20</td>
-<td>0.527643</td>
-<td>-2.145393</td>
+<td>0.575431</td>
+<td>1.047389</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-21</td>
-<td>-0.295973</td>
-<td>-1.032201</td>
+<td>-2.190910</td>
+<td>-0.077193</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-23</td>
-<td>-1.079115</td>
-<td>0.023358</td>
+<td>-1.849069</td>
+<td>0.651033</td>
 </tr>
 </tbody>
 </table>
@@ -1417,9 +1417,9 @@ Name: 2023-07-22 00:00:00, dtype: float64</code></pre>
 </div>
 </div>
 <p>For Slicing rows explicitly</p>
-<div class="cell" hidden="true" data-execution_count="30">
+<div class="cell" hidden="true" data-execution_count="141">
 <div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>df.iloc[<span class="dv">1</span>:<span class="dv">3</span>, :]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="30">
+<div class="cell-output cell-output-display" data-execution_count="141">
 <div>
 
 
@@ -1436,17 +1436,17 @@ Name: 2023-07-22 00:00:00, dtype: float64</code></pre>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-20</td>
-<td>0.527643</td>
-<td>0.850008</td>
-<td>-2.145393</td>
-<td>-1.092856</td>
+<td>0.575431</td>
+<td>1.137937</td>
+<td>1.047389</td>
+<td>0.781983</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-21</td>
-<td>-0.295973</td>
-<td>0.681027</td>
-<td>-1.032201</td>
-<td>-1.090513</td>
+<td>-2.190910</td>
+<td>1.870997</td>
+<td>-0.077193</td>
+<td>0.073455</td>
 </tr>
 </tbody>
 </table>
@@ -1455,9 +1455,9 @@ Name: 2023-07-22 00:00:00, dtype: float64</code></pre>
 </div>
 </div>
 <p>For slicing columns, explicitly</p>
-<div class="cell" hidden="true" data-execution_count="31">
+<div class="cell" hidden="true" data-execution_count="142">
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>df.iloc[:, <span class="dv">1</span>:<span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="31">
+<div class="cell-output cell-output-display" data-execution_count="142">
 <div>
 
 
@@ -1472,33 +1472,33 @@ Name: 2023-07-22 00:00:00, dtype: float64</code></pre>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-19</td>
-<td>0.166914</td>
-<td>0.193785</td>
+<td>-1.470149</td>
+<td>0.560228</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-20</td>
-<td>0.850008</td>
-<td>-2.145393</td>
+<td>1.137937</td>
+<td>1.047389</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-21</td>
-<td>0.681027</td>
-<td>-1.032201</td>
+<td>1.870997</td>
+<td>-0.077193</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-22</td>
-<td>-0.607460</td>
-<td>0.301047</td>
+<td>-1.067051</td>
+<td>-0.193304</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-23</td>
-<td>0.877211</td>
-<td>0.023358</td>
+<td>-0.332361</td>
+<td>0.651033</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-24</td>
-<td>-1.912616</td>
-<td>0.219415</td>
+<td>1.468794</td>
+<td>0.736791</td>
 </tr>
 </tbody>
 </table>
@@ -1507,34 +1507,34 @@ Name: 2023-07-22 00:00:00, dtype: float64</code></pre>
 </div>
 </div>
 <p>For getting a value explicitly</p>
-<div class="cell" hidden="true" data-execution_count="32">
+<div class="cell" hidden="true" data-execution_count="143">
 <div class="sourceCode cell-code" id="cb61"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>time df.iloc[<span class="dv">1</span>,<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>CPU times: user 62 µs, sys: 53 µs, total: 115 µs
-Wall time: 118 µs</code></pre>
+<pre><code>CPU times: user 146 µs, sys: 56 µs, total: 202 µs
+Wall time: 226 µs</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="32">
-<pre><code>0.8500084309052217</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="143">
+<pre><code>1.1379365400656174</code></pre>
 </div>
 </div>
 <p>For getting fast access,</p>
-<div class="cell" hidden="true" data-execution_count="33">
+<div class="cell" hidden="true" data-execution_count="144">
 <div class="sourceCode cell-code" id="cb64"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>time df.iat[<span class="dv">1</span>,<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>CPU times: user 52 µs, sys: 44 µs, total: 96 µs
-Wall time: 98.9 µs</code></pre>
+<pre><code>CPU times: user 95 µs, sys: 36 µs, total: 131 µs
+Wall time: 145 µs</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="33">
-<pre><code>0.8500084309052217</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="144">
+<pre><code>1.1379365400656174</code></pre>
 </div>
 </div>
 </section>
 <section id="boolean-indexing" class="level3">
 <h3 class="anchored" data-anchor-id="boolean-indexing">Boolean Indexing</h3>
 <p>Using single column’s values to select data</p>
-<div class="cell" hidden="true" data-execution_count="34">
+<div class="cell" hidden="true" data-execution_count="145">
 <div class="sourceCode cell-code" id="cb67"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>df[df[<span class="st">"B"</span>] <span class="op">&gt;</span> <span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="34">
+<div class="cell-output cell-output-display" data-execution_count="145">
 <div>
 
 
@@ -1550,32 +1550,25 @@ Wall time: 98.9 µs</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2023-07-19</td>
-<td>-0.111161</td>
-<td>0.166914</td>
-<td>0.193785</td>
-<td>1.071966</td>
+<td data-quarto-table-cell-role="th">2023-07-20</td>
+<td>0.575431</td>
+<td>1.137937</td>
+<td>1.047389</td>
+<td>0.781983</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">2023-07-20</td>
-<td>0.527643</td>
-<td>0.850008</td>
-<td>-2.145393</td>
-<td>-1.092856</td>
+<td data-quarto-table-cell-role="th">2023-07-21</td>
+<td>-2.190910</td>
+<td>1.870997</td>
+<td>-0.077193</td>
+<td>0.073455</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2023-07-21</td>
-<td>-0.295973</td>
-<td>0.681027</td>
-<td>-1.032201</td>
-<td>-1.090513</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">2023-07-23</td>
-<td>-1.079115</td>
-<td>0.877211</td>
-<td>0.023358</td>
-<td>0.027880</td>
+<td data-quarto-table-cell-role="th">2023-07-24</td>
+<td>0.991580</td>
+<td>1.468794</td>
+<td>0.736791</td>
+<td>-0.636845</td>
 </tr>
 </tbody>
 </table>
@@ -1584,9 +1577,9 @@ Wall time: 98.9 µs</code></pre>
 </div>
 </div>
 <p>Selecting values from a DataFrame where a boolean condition is met:</p>
-<div class="cell" hidden="true" data-execution_count="35">
+<div class="cell" hidden="true" data-execution_count="146">
 <div class="sourceCode cell-code" id="cb68"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>df[df <span class="op">&gt;</span> <span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="35">
+<div class="cell-output cell-output-display" data-execution_count="146">
 <div>
 
 
@@ -1603,45 +1596,45 @@ Wall time: 98.9 µs</code></pre>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-19</td>
+<td>1.285308</td>
 <td>NaN</td>
-<td>0.166914</td>
-<td>0.193785</td>
-<td>1.071966</td>
+<td>0.560228</td>
+<td>1.718412</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-20</td>
-<td>0.527643</td>
-<td>0.850008</td>
-<td>NaN</td>
-<td>NaN</td>
+<td>0.575431</td>
+<td>1.137937</td>
+<td>1.047389</td>
+<td>0.781983</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-21</td>
 <td>NaN</td>
-<td>0.681027</td>
+<td>1.870997</td>
 <td>NaN</td>
-<td>NaN</td>
+<td>0.073455</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-22</td>
-<td>0.163666</td>
 <td>NaN</td>
-<td>0.301047</td>
 <td>NaN</td>
+<td>NaN</td>
+<td>0.295413</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-23</td>
 <td>NaN</td>
-<td>0.877211</td>
-<td>0.023358</td>
-<td>0.027880</td>
+<td>NaN</td>
+<td>0.651033</td>
+<td>NaN</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-24</td>
-<td>1.443937</td>
+<td>0.991580</td>
+<td>1.468794</td>
+<td>0.736791</td>
 <td>NaN</td>
-<td>0.219415</td>
-<td>0.500132</td>
 </tr>
 </tbody>
 </table>
@@ -1650,13 +1643,13 @@ Wall time: 98.9 µs</code></pre>
 </div>
 </div>
 <p>Using <code>isin()</code> method for filtering</p>
-<div class="cell" hidden="true" data-execution_count="36">
+<div class="cell" hidden="true" data-execution_count="147">
 <div class="sourceCode cell-code" id="cb69"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> df.copy()</span>
 <span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>df2[<span class="st">"E"</span>] <span class="op">=</span> [<span class="st">"one"</span>, <span class="st">"one"</span>, <span class="st">"two"</span>, <span class="st">"three"</span>, <span class="st">"four"</span>, <span class="st">"three"</span>]</span>
 <span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a>df2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="36">
+<div class="cell-output cell-output-display" data-execution_count="147">
 <div>
 
 
@@ -1674,50 +1667,50 @@ Wall time: 98.9 µs</code></pre>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-19</td>
-<td>-0.111161</td>
-<td>0.166914</td>
-<td>0.193785</td>
-<td>1.071966</td>
+<td>1.285308</td>
+<td>-1.470149</td>
+<td>0.560228</td>
+<td>1.718412</td>
 <td>one</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-20</td>
-<td>0.527643</td>
-<td>0.850008</td>
-<td>-2.145393</td>
-<td>-1.092856</td>
+<td>0.575431</td>
+<td>1.137937</td>
+<td>1.047389</td>
+<td>0.781983</td>
 <td>one</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-21</td>
-<td>-0.295973</td>
-<td>0.681027</td>
-<td>-1.032201</td>
-<td>-1.090513</td>
+<td>-2.190910</td>
+<td>1.870997</td>
+<td>-0.077193</td>
+<td>0.073455</td>
 <td>two</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-22</td>
-<td>0.163666</td>
-<td>-0.607460</td>
-<td>0.301047</td>
-<td>-1.192986</td>
+<td>-0.221982</td>
+<td>-1.067051</td>
+<td>-0.193304</td>
+<td>0.295413</td>
 <td>three</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-23</td>
-<td>-1.079115</td>
-<td>0.877211</td>
-<td>0.023358</td>
-<td>0.027880</td>
+<td>-1.849069</td>
+<td>-0.332361</td>
+<td>0.651033</td>
+<td>-0.900765</td>
 <td>four</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-24</td>
-<td>1.443937</td>
-<td>-1.912616</td>
-<td>0.219415</td>
-<td>0.500132</td>
+<td>0.991580</td>
+<td>1.468794</td>
+<td>0.736791</td>
+<td>-0.636845</td>
 <td>three</td>
 </tr>
 </tbody>
@@ -1726,9 +1719,9 @@ Wall time: 98.9 µs</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="37">
+<div class="cell" hidden="true" data-execution_count="148">
 <div class="sourceCode cell-code" id="cb70"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>df2[df2[<span class="st">"E"</span>].isin([<span class="st">"two"</span>, <span class="st">"four"</span>])]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="37">
+<div class="cell-output cell-output-display" data-execution_count="148">
 <div>
 
 
@@ -1746,18 +1739,18 @@ Wall time: 98.9 µs</code></pre>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-21</td>
-<td>-0.295973</td>
-<td>0.681027</td>
-<td>-1.032201</td>
-<td>-1.090513</td>
+<td>-2.190910</td>
+<td>1.870997</td>
+<td>-0.077193</td>
+<td>0.073455</td>
 <td>two</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-23</td>
-<td>-1.079115</td>
-<td>0.877211</td>
-<td>0.023358</td>
-<td>0.027880</td>
+<td>-1.849069</td>
+<td>-0.332361</td>
+<td>0.651033</td>
+<td>-0.900765</td>
 <td>four</td>
 </tr>
 </tbody>
@@ -1770,10 +1763,10 @@ Wall time: 98.9 µs</code></pre>
 <section id="setting" class="level3">
 <h3 class="anchored" data-anchor-id="setting">Setting</h3>
 <p>Setting a new column automatically aligns the data by the indexes</p>
-<div class="cell" hidden="true" data-execution_count="38">
+<div class="cell" hidden="true" data-execution_count="149">
 <div class="sourceCode cell-code" id="cb71"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>s1 <span class="op">=</span> pd.Series([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>], index<span class="op">=</span>pd.date_range(<span class="st">"20230719"</span>, periods<span class="op">=</span><span class="dv">6</span>))</span>
 <span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>s1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="38">
+<div class="cell-output cell-output-display" data-execution_count="149">
 <pre><code>2023-07-19    1
 2023-07-20    2
 2023-07-21    3
@@ -1783,14 +1776,14 @@ Wall time: 98.9 µs</code></pre>
 Freq: D, dtype: int64</code></pre>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="39">
+<div class="cell" hidden="true" data-execution_count="150">
 <div class="sourceCode cell-code" id="cb73"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"F"</span>] <span class="op">=</span> s1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Setting values by label</p>
-<div class="cell" hidden="true" data-execution_count="40">
+<div class="cell" hidden="true" data-execution_count="151">
 <div class="sourceCode cell-code" id="cb74"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>df.at[dates[<span class="dv">0</span>], <span class="st">"A"</span>] <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="40">
+<div class="cell-output cell-output-display" data-execution_count="151">
 <div>
 
 
@@ -1809,49 +1802,49 @@ Freq: D, dtype: int64</code></pre>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-19</td>
 <td>0.000000</td>
-<td>0.166914</td>
-<td>0.193785</td>
-<td>1.071966</td>
+<td>-1.470149</td>
+<td>0.560228</td>
+<td>1.718412</td>
 <td>1</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-20</td>
-<td>0.527643</td>
-<td>0.850008</td>
-<td>-2.145393</td>
-<td>-1.092856</td>
+<td>0.575431</td>
+<td>1.137937</td>
+<td>1.047389</td>
+<td>0.781983</td>
 <td>2</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-21</td>
-<td>-0.295973</td>
-<td>0.681027</td>
-<td>-1.032201</td>
-<td>-1.090513</td>
+<td>-2.190910</td>
+<td>1.870997</td>
+<td>-0.077193</td>
+<td>0.073455</td>
 <td>3</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-22</td>
-<td>0.163666</td>
-<td>-0.607460</td>
-<td>0.301047</td>
-<td>-1.192986</td>
+<td>-0.221982</td>
+<td>-1.067051</td>
+<td>-0.193304</td>
+<td>0.295413</td>
 <td>4</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-23</td>
-<td>-1.079115</td>
-<td>0.877211</td>
-<td>0.023358</td>
-<td>0.027880</td>
+<td>-1.849069</td>
+<td>-0.332361</td>
+<td>0.651033</td>
+<td>-0.900765</td>
 <td>5</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-24</td>
-<td>1.443937</td>
-<td>-1.912616</td>
-<td>0.219415</td>
-<td>0.500132</td>
+<td>0.991580</td>
+<td>1.468794</td>
+<td>0.736791</td>
+<td>-0.636845</td>
 <td>6</td>
 </tr>
 </tbody>
@@ -1861,10 +1854,10 @@ Freq: D, dtype: int64</code></pre>
 </div>
 </div>
 <p>Setting values by position</p>
-<div class="cell" hidden="true" data-execution_count="41">
+<div class="cell" hidden="true" data-execution_count="152">
 <div class="sourceCode cell-code" id="cb75"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>df.iat[<span class="dv">0</span>, <span class="dv">1</span>] <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="41">
+<div class="cell-output cell-output-display" data-execution_count="152">
 <div>
 
 
@@ -1884,48 +1877,48 @@ Freq: D, dtype: int64</code></pre>
 <td data-quarto-table-cell-role="th">2023-07-19</td>
 <td>0.000000</td>
 <td>0.000000</td>
-<td>0.193785</td>
-<td>1.071966</td>
+<td>0.560228</td>
+<td>1.718412</td>
 <td>1</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-20</td>
-<td>0.527643</td>
-<td>0.850008</td>
-<td>-2.145393</td>
-<td>-1.092856</td>
+<td>0.575431</td>
+<td>1.137937</td>
+<td>1.047389</td>
+<td>0.781983</td>
 <td>2</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-21</td>
-<td>-0.295973</td>
-<td>0.681027</td>
-<td>-1.032201</td>
-<td>-1.090513</td>
+<td>-2.190910</td>
+<td>1.870997</td>
+<td>-0.077193</td>
+<td>0.073455</td>
 <td>3</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-22</td>
-<td>0.163666</td>
-<td>-0.607460</td>
-<td>0.301047</td>
-<td>-1.192986</td>
+<td>-0.221982</td>
+<td>-1.067051</td>
+<td>-0.193304</td>
+<td>0.295413</td>
 <td>4</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-23</td>
-<td>-1.079115</td>
-<td>0.877211</td>
-<td>0.023358</td>
-<td>0.027880</td>
+<td>-1.849069</td>
+<td>-0.332361</td>
+<td>0.651033</td>
+<td>-0.900765</td>
 <td>5</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-24</td>
-<td>1.443937</td>
-<td>-1.912616</td>
-<td>0.219415</td>
-<td>0.500132</td>
+<td>0.991580</td>
+<td>1.468794</td>
+<td>0.736791</td>
+<td>-0.636845</td>
 <td>6</td>
 </tr>
 </tbody>
@@ -1935,10 +1928,10 @@ Freq: D, dtype: int64</code></pre>
 </div>
 </div>
 <p>Setting by assigning with a NumPy array</p>
-<div class="cell" hidden="true" data-execution_count="42">
+<div class="cell" hidden="true" data-execution_count="153">
 <div class="sourceCode cell-code" id="cb76"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>df.loc[:, <span class="st">"D"</span>] <span class="op">=</span> np.array([<span class="dv">5</span>] <span class="op">*</span> <span class="bu">len</span>(df))</span>
 <span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="42">
+<div class="cell-output cell-output-display" data-execution_count="153">
 <div>
 
 
@@ -1958,47 +1951,47 @@ Freq: D, dtype: int64</code></pre>
 <td data-quarto-table-cell-role="th">2023-07-19</td>
 <td>0.000000</td>
 <td>0.000000</td>
-<td>0.193785</td>
+<td>0.560228</td>
 <td>5.0</td>
 <td>1</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-20</td>
-<td>0.527643</td>
-<td>0.850008</td>
-<td>-2.145393</td>
+<td>0.575431</td>
+<td>1.137937</td>
+<td>1.047389</td>
 <td>5.0</td>
 <td>2</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-21</td>
-<td>-0.295973</td>
-<td>0.681027</td>
-<td>-1.032201</td>
+<td>-2.190910</td>
+<td>1.870997</td>
+<td>-0.077193</td>
 <td>5.0</td>
 <td>3</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-22</td>
-<td>0.163666</td>
-<td>-0.607460</td>
-<td>0.301047</td>
+<td>-0.221982</td>
+<td>-1.067051</td>
+<td>-0.193304</td>
 <td>5.0</td>
 <td>4</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-23</td>
-<td>-1.079115</td>
-<td>0.877211</td>
-<td>0.023358</td>
+<td>-1.849069</td>
+<td>-0.332361</td>
+<td>0.651033</td>
 <td>5.0</td>
 <td>5</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-24</td>
-<td>1.443937</td>
-<td>-1.912616</td>
-<td>0.219415</td>
+<td>0.991580</td>
+<td>1.468794</td>
+<td>0.736791</td>
 <td>5.0</td>
 <td>6</td>
 </tr>
@@ -2009,13 +2002,13 @@ Freq: D, dtype: int64</code></pre>
 </div>
 </div>
 <p>A <code>where</code> operation with setting</p>
-<div class="cell" hidden="true" data-execution_count="43">
+<div class="cell" hidden="true" data-execution_count="154">
 <div class="sourceCode cell-code" id="cb77"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> df.copy()</span>
 <span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>df2[df2 <span class="op">&gt;</span> <span class="dv">0</span>] <span class="op">=</span> <span class="op">-</span>df2</span>
 <span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb77-5"><a href="#cb77-5" aria-hidden="true" tabindex="-1"></a>df2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="43">
+<div class="cell-output cell-output-display" data-execution_count="154">
 <div>
 
 
@@ -2035,47 +2028,47 @@ Freq: D, dtype: int64</code></pre>
 <td data-quarto-table-cell-role="th">2023-07-19</td>
 <td>0.000000</td>
 <td>0.000000</td>
-<td>-0.193785</td>
+<td>-0.560228</td>
 <td>-5.0</td>
 <td>-1</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-20</td>
-<td>-0.527643</td>
-<td>-0.850008</td>
-<td>-2.145393</td>
+<td>-0.575431</td>
+<td>-1.137937</td>
+<td>-1.047389</td>
 <td>-5.0</td>
 <td>-2</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-21</td>
-<td>-0.295973</td>
-<td>-0.681027</td>
-<td>-1.032201</td>
+<td>-2.190910</td>
+<td>-1.870997</td>
+<td>-0.077193</td>
 <td>-5.0</td>
 <td>-3</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-22</td>
-<td>-0.163666</td>
-<td>-0.607460</td>
-<td>-0.301047</td>
+<td>-0.221982</td>
+<td>-1.067051</td>
+<td>-0.193304</td>
 <td>-5.0</td>
 <td>-4</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-23</td>
-<td>-1.079115</td>
-<td>-0.877211</td>
-<td>-0.023358</td>
+<td>-1.849069</td>
+<td>-0.332361</td>
+<td>-0.651033</td>
 <td>-5.0</td>
 <td>-5</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-24</td>
-<td>-1.443937</td>
-<td>-1.912616</td>
-<td>-0.219415</td>
+<td>-0.991580</td>
+<td>-1.468794</td>
+<td>-0.736791</td>
 <td>-5.0</td>
 <td>-6</td>
 </tr>
@@ -2091,12 +2084,12 @@ Freq: D, dtype: int64</code></pre>
 <h2 class="anchored" data-anchor-id="missing-data">Missing data</h2>
 <p>pandas primarily uses the value <code>np.nan</code> to represent missing data.</p>
 <p>Reindexing allows us to change/add/delete the index on a specified axis.</p>
-<div class="cell" hidden="true" data-execution_count="48">
+<div class="cell" hidden="true" data-execution_count="155">
 <div class="sourceCode cell-code" id="cb78"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="op">=</span> df.reindex(index<span class="op">=</span>dates[:<span class="dv">4</span>], columns<span class="op">=</span><span class="bu">list</span>(df.columns) <span class="op">+</span> [<span class="st">"E"</span>])</span>
 <span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>df1.loc[dates[<span class="dv">0</span>]: dates[<span class="dv">1</span>], <span class="st">"E"</span>] <span class="op">=</span> <span class="dv">1</span></span>
 <span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a>df1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="48">
+<div class="cell-output cell-output-display" data-execution_count="155">
 <div>
 
 
@@ -2117,34 +2110,34 @@ Freq: D, dtype: int64</code></pre>
 <td data-quarto-table-cell-role="th">2023-07-19</td>
 <td>0.000000</td>
 <td>0.000000</td>
-<td>0.193785</td>
+<td>0.560228</td>
 <td>5.0</td>
 <td>1</td>
 <td>1.0</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-20</td>
-<td>0.527643</td>
-<td>0.850008</td>
-<td>-2.145393</td>
+<td>0.575431</td>
+<td>1.137937</td>
+<td>1.047389</td>
 <td>5.0</td>
 <td>2</td>
 <td>1.0</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-21</td>
-<td>-0.295973</td>
-<td>0.681027</td>
-<td>-1.032201</td>
+<td>-2.190910</td>
+<td>1.870997</td>
+<td>-0.077193</td>
 <td>5.0</td>
 <td>3</td>
 <td>NaN</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-22</td>
-<td>0.163666</td>
-<td>-0.607460</td>
-<td>0.301047</td>
+<td>-0.221982</td>
+<td>-1.067051</td>
+<td>-0.193304</td>
 <td>5.0</td>
 <td>4</td>
 <td>NaN</td>
@@ -2156,9 +2149,9 @@ Freq: D, dtype: int64</code></pre>
 </div>
 </div>
 <p><code>DataFrame.dropna()</code> drops any rows that have missing data</p>
-<div class="cell" hidden="true" data-execution_count="51">
+<div class="cell" hidden="true" data-execution_count="156">
 <div class="sourceCode cell-code" id="cb79"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>df1.dropna(how<span class="op">=</span><span class="st">"any"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="51">
+<div class="cell-output cell-output-display" data-execution_count="156">
 <div>
 
 
@@ -2179,16 +2172,16 @@ Freq: D, dtype: int64</code></pre>
 <td data-quarto-table-cell-role="th">2023-07-19</td>
 <td>0.000000</td>
 <td>0.000000</td>
-<td>0.193785</td>
+<td>0.560228</td>
 <td>5.0</td>
 <td>1</td>
 <td>1.0</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-20</td>
-<td>0.527643</td>
-<td>0.850008</td>
-<td>-2.145393</td>
+<td>0.575431</td>
+<td>1.137937</td>
+<td>1.047389</td>
 <td>5.0</td>
 <td>2</td>
 <td>1.0</td>
@@ -2200,9 +2193,9 @@ Freq: D, dtype: int64</code></pre>
 </div>
 </div>
 <p><code>DataFrame.fillna()</code> fills missing data</p>
-<div class="cell" hidden="true" data-execution_count="52">
+<div class="cell" hidden="true" data-execution_count="157">
 <div class="sourceCode cell-code" id="cb80"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>df1.fillna(value<span class="op">=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="52">
+<div class="cell-output cell-output-display" data-execution_count="157">
 <div>
 
 
@@ -2223,34 +2216,34 @@ Freq: D, dtype: int64</code></pre>
 <td data-quarto-table-cell-role="th">2023-07-19</td>
 <td>0.000000</td>
 <td>0.000000</td>
-<td>0.193785</td>
+<td>0.560228</td>
 <td>5.0</td>
 <td>1</td>
 <td>1.0</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-20</td>
-<td>0.527643</td>
-<td>0.850008</td>
-<td>-2.145393</td>
+<td>0.575431</td>
+<td>1.137937</td>
+<td>1.047389</td>
 <td>5.0</td>
 <td>2</td>
 <td>1.0</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-21</td>
-<td>-0.295973</td>
-<td>0.681027</td>
-<td>-1.032201</td>
+<td>-2.190910</td>
+<td>1.870997</td>
+<td>-0.077193</td>
 <td>5.0</td>
 <td>3</td>
 <td>5.0</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-22</td>
-<td>0.163666</td>
-<td>-0.607460</td>
-<td>0.301047</td>
+<td>-0.221982</td>
+<td>-1.067051</td>
+<td>-0.193304</td>
 <td>5.0</td>
 <td>4</td>
 <td>5.0</td>
@@ -2262,9 +2255,9 @@ Freq: D, dtype: int64</code></pre>
 </div>
 </div>
 <p><code>isna()</code> gets the boolean mask where values are <code>nan</code>.</p>
-<div class="cell" hidden="true" data-execution_count="53">
+<div class="cell" hidden="true" data-execution_count="158">
 <div class="sourceCode cell-code" id="cb81"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>pd.isna(df1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="53">
+<div class="cell-output cell-output-display" data-execution_count="158">
 <div>
 
 
@@ -2329,33 +2322,33 @@ Freq: D, dtype: int64</code></pre>
 <section id="stats" class="level3">
 <h3 class="anchored" data-anchor-id="stats">Stats</h3>
 <p>Operations in general exclude missing data.</p>
-<div class="cell" hidden="true" data-execution_count="55">
+<div class="cell" hidden="true" data-execution_count="159">
 <div class="sourceCode cell-code" id="cb82"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>df.mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="55">
-<pre><code>A    0.126693
-B   -0.018638
-C   -0.406665
+<div class="cell-output cell-output-display" data-execution_count="159">
+<pre><code>A   -0.449158
+B    0.513053
+C    0.454157
 D    5.000000
 F    3.500000
 dtype: float64</code></pre>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="56">
+<div class="cell" hidden="true" data-execution_count="160">
 <div class="sourceCode cell-code" id="cb84"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>df.mean(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="56">
-<pre><code>2023-07-19    1.238757
-2023-07-20    1.246452
-2023-07-21    1.470570
-2023-07-22    1.771450
-2023-07-23    1.964291
-2023-07-24    2.150147
+<div class="cell-output cell-output-display" data-execution_count="160">
+<pre><code>2023-07-19    1.312046
+2023-07-20    1.952151
+2023-07-21    1.520579
+2023-07-22    1.503533
+2023-07-23    1.693921
+2023-07-24    2.839433
 Freq: D, dtype: float64</code></pre>
 </div>
 </div>
 <p>For opearting with objects that have different dimensionality and need alignment, pandas automatically broadcasts along the specified dimension.</p>
-<div class="cell" hidden="true" data-execution_count="58">
+<div class="cell" hidden="true" data-execution_count="161">
 <div class="sourceCode cell-code" id="cb86"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>dates</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="58">
+<div class="cell-output cell-output-display" data-execution_count="161">
 <pre><code>DatetimeIndex(['2023-07-19', '2023-07-20', '2023-07-21', '2023-07-22',
                '2023-07-23', '2023-07-24'],
               dtype='datetime64[ns]', freq='D')</code></pre>
@@ -2363,11 +2356,11 @@ Freq: D, dtype: float64</code></pre>
 </div>
 <p><code>shift</code> : Shift index by desired number of time frequency increments.</p>
 <p>This method is for shifting the values of datetime-like indexes by a specified time increment a given number of times.</p>
-<div class="cell" hidden="true" data-execution_count="57">
+<div class="cell" hidden="true" data-execution_count="162">
 <div class="sourceCode cell-code" id="cb88"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> pd.Series([<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, np.nan, <span class="dv">6</span>, <span class="dv">8</span>], index<span class="op">=</span>dates).shift(<span class="dv">2</span>)</span>
 <span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a>s</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="57">
+<div class="cell-output cell-output-display" data-execution_count="162">
 <pre><code>2023-07-19    NaN
 2023-07-20    NaN
 2023-07-21    1.0
@@ -2377,9 +2370,9 @@ Freq: D, dtype: float64</code></pre>
 Freq: D, dtype: float64</code></pre>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="60">
+<div class="cell" hidden="true" data-execution_count="163">
 <div class="sourceCode cell-code" id="cb90"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="60">
+<div class="cell-output cell-output-display" data-execution_count="163">
 <div>
 
 
@@ -2399,47 +2392,47 @@ Freq: D, dtype: float64</code></pre>
 <td data-quarto-table-cell-role="th">2023-07-19</td>
 <td>0.000000</td>
 <td>0.000000</td>
-<td>0.193785</td>
+<td>0.560228</td>
 <td>5.0</td>
 <td>1</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-20</td>
-<td>0.527643</td>
-<td>0.850008</td>
-<td>-2.145393</td>
+<td>0.575431</td>
+<td>1.137937</td>
+<td>1.047389</td>
 <td>5.0</td>
 <td>2</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-21</td>
-<td>-0.295973</td>
-<td>0.681027</td>
-<td>-1.032201</td>
+<td>-2.190910</td>
+<td>1.870997</td>
+<td>-0.077193</td>
 <td>5.0</td>
 <td>3</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-22</td>
-<td>0.163666</td>
-<td>-0.607460</td>
-<td>0.301047</td>
+<td>-0.221982</td>
+<td>-1.067051</td>
+<td>-0.193304</td>
 <td>5.0</td>
 <td>4</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-23</td>
-<td>-1.079115</td>
-<td>0.877211</td>
-<td>0.023358</td>
+<td>-1.849069</td>
+<td>-0.332361</td>
+<td>0.651033</td>
 <td>5.0</td>
 <td>5</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-24</td>
-<td>1.443937</td>
-<td>-1.912616</td>
-<td>0.219415</td>
+<td>0.991580</td>
+<td>1.468794</td>
+<td>0.736791</td>
 <td>5.0</td>
 <td>6</td>
 </tr>
@@ -2449,9 +2442,9 @@ Freq: D, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="59">
+<div class="cell" hidden="true" data-execution_count="164">
 <div class="sourceCode cell-code" id="cb91"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>df.sub(s, axis<span class="op">=</span><span class="st">"index"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="59">
+<div class="cell-output cell-output-display" data-execution_count="164">
 <div>
 
 
@@ -2485,25 +2478,25 @@ Freq: D, dtype: float64</code></pre>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-21</td>
-<td>-1.295973</td>
-<td>-0.318973</td>
-<td>-2.032201</td>
+<td>-3.190910</td>
+<td>0.870997</td>
+<td>-1.077193</td>
 <td>4.0</td>
 <td>2.0</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-22</td>
-<td>-2.836334</td>
-<td>-3.607460</td>
-<td>-2.698953</td>
+<td>-3.221982</td>
+<td>-4.067051</td>
+<td>-3.193304</td>
 <td>2.0</td>
 <td>1.0</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-23</td>
-<td>-6.079115</td>
-<td>-4.122789</td>
-<td>-4.976642</td>
+<td>-6.849069</td>
+<td>-5.332361</td>
+<td>-4.348967</td>
 <td>0.0</td>
 <td>0.0</td>
 </tr>
@@ -2524,9 +2517,9 @@ Freq: D, dtype: float64</code></pre>
 </section>
 <section id="apply" class="level3">
 <h3 class="anchored" data-anchor-id="apply">Apply</h3>
-<div class="cell" hidden="true" data-execution_count="61">
+<div class="cell" hidden="true" data-execution_count="165">
 <div class="sourceCode cell-code" id="cb92"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>df.<span class="bu">apply</span>(np.cumsum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="61">
+<div class="cell-output cell-output-display" data-execution_count="165">
 <div>
 
 
@@ -2546,47 +2539,47 @@ Freq: D, dtype: float64</code></pre>
 <td data-quarto-table-cell-role="th">2023-07-19</td>
 <td>0.000000</td>
 <td>0.000000</td>
-<td>0.193785</td>
+<td>0.560228</td>
 <td>5.0</td>
 <td>1</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-20</td>
-<td>0.527643</td>
-<td>0.850008</td>
-<td>-1.951608</td>
+<td>0.575431</td>
+<td>1.137937</td>
+<td>1.607618</td>
 <td>10.0</td>
 <td>3</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-21</td>
-<td>0.231670</td>
-<td>1.531035</td>
-<td>-2.983809</td>
+<td>-1.615478</td>
+<td>3.008934</td>
+<td>1.530425</td>
 <td>15.0</td>
 <td>6</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-22</td>
-<td>0.395336</td>
-<td>0.923575</td>
-<td>-2.682762</td>
+<td>-1.837460</td>
+<td>1.941883</td>
+<td>1.337121</td>
 <td>20.0</td>
 <td>10</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2023-07-23</td>
-<td>-0.683780</td>
-<td>1.800786</td>
-<td>-2.659404</td>
+<td>-3.686529</td>
+<td>1.609522</td>
+<td>1.988154</td>
 <td>25.0</td>
 <td>15</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2023-07-24</td>
-<td>0.760158</td>
-<td>-0.111830</td>
-<td>-2.439989</td>
+<td>-2.694950</td>
+<td>3.078316</td>
+<td>2.724945</td>
 <td>30.0</td>
 <td>21</td>
 </tr>
@@ -2599,44 +2592,44 @@ Freq: D, dtype: float64</code></pre>
 </section>
 <section id="histogramming" class="level3">
 <h3 class="anchored" data-anchor-id="histogramming">Histogramming</h3>
-<div class="cell" hidden="true" data-execution_count="69">
+<div class="cell" hidden="true" data-execution_count="166">
 <div class="sourceCode cell-code" id="cb93"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> pd.Series(np.random.randint(<span class="dv">0</span>, <span class="dv">7</span>, size<span class="op">=</span><span class="dv">10</span>))</span>
 <span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a>s </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="69">
+<div class="cell-output cell-output-display" data-execution_count="166">
 <pre><code>0    3
-1    0
-2    1
-3    5
+1    3
+2    2
+3    4
 4    5
 5    2
-6    1
+6    4
 7    1
 8    4
-9    2
+9    0
 dtype: int64</code></pre>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="70">
+<div class="cell" hidden="true" data-execution_count="167">
 <div class="sourceCode cell-code" id="cb95"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>s.value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="70">
-<pre><code>1    3
-5    2
+<div class="cell-output cell-output-display" data-execution_count="167">
+<pre><code>4    3
+3    2
 2    2
-3    1
+5    1
+1    1
 0    1
-4    1
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
 </section>
 <section id="string-methods" class="level3">
 <h3 class="anchored" data-anchor-id="string-methods">String Methods</h3>
-<div class="cell" hidden="true" data-execution_count="71">
+<div class="cell" hidden="true" data-execution_count="168">
 <div class="sourceCode cell-code" id="cb97"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> pd.Series([<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"Aaba"</span>, <span class="st">"Baca"</span>, np.nan, <span class="st">"CABA"</span>, <span class="st">"dog"</span>, <span class="st">"cat"</span>])</span>
 <span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb97-3"><a href="#cb97-3" aria-hidden="true" tabindex="-1"></a>s.<span class="bu">str</span>.lower()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="71">
+<div class="cell-output cell-output-display" data-execution_count="168">
 <pre><code>0       a
 1       b
 2       c
@@ -2655,10 +2648,10 @@ dtype: object</code></pre>
 <h2 class="anchored" data-anchor-id="merge">Merge</h2>
 <section id="concat" class="level3">
 <h3 class="anchored" data-anchor-id="concat">Concat</h3>
-<div class="cell" hidden="true" data-execution_count="72">
+<div class="cell" hidden="true" data-execution_count="169">
 <div class="sourceCode cell-code" id="cb99"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(np.random.randn(<span class="dv">10</span>, <span class="dv">4</span>))</span>
 <span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="72">
+<div class="cell-output cell-output-display" data-execution_count="169">
 <div>
 
 
@@ -2675,73 +2668,73 @@ dtype: object</code></pre>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
-<td>0.153445</td>
-<td>-1.008416</td>
-<td>-0.505299</td>
-<td>0.025258</td>
+<td>-1.315323</td>
+<td>0.194542</td>
+<td>-0.957266</td>
+<td>0.183061</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
-<td>0.277799</td>
-<td>0.930983</td>
-<td>-0.367915</td>
-<td>-1.232603</td>
+<td>-0.836715</td>
+<td>-0.021930</td>
+<td>-0.990074</td>
+<td>0.338903</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
-<td>0.469069</td>
-<td>-1.270812</td>
-<td>2.911260</td>
-<td>-1.190650</td>
+<td>-0.669019</td>
+<td>-0.827160</td>
+<td>-0.286310</td>
+<td>-0.272068</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">3</td>
-<td>0.067151</td>
-<td>-0.616638</td>
-<td>-1.448431</td>
-<td>0.316322</td>
+<td>-0.942129</td>
+<td>1.032606</td>
+<td>0.603234</td>
+<td>0.059547</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">4</td>
-<td>-0.398150</td>
-<td>-0.282550</td>
-<td>0.085388</td>
-<td>0.825427</td>
+<td>0.415468</td>
+<td>-0.764356</td>
+<td>-1.511200</td>
+<td>-1.034473</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">5</td>
-<td>1.911145</td>
-<td>-0.163210</td>
-<td>0.014488</td>
-<td>0.059030</td>
+<td>0.509728</td>
+<td>0.218553</td>
+<td>0.157009</td>
+<td>0.426563</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">6</td>
-<td>2.202431</td>
-<td>-0.210953</td>
-<td>-0.603069</td>
-<td>1.214237</td>
+<td>-0.848851</td>
+<td>-0.956666</td>
+<td>0.984184</td>
+<td>0.973830</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">7</td>
-<td>-0.503438</td>
-<td>0.378269</td>
-<td>-0.917014</td>
-<td>0.189364</td>
+<td>0.376811</td>
+<td>0.697650</td>
+<td>1.570477</td>
+<td>-2.095464</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">8</td>
-<td>0.847221</td>
-<td>0.674547</td>
-<td>-3.213680</td>
-<td>-1.436244</td>
+<td>-0.752137</td>
+<td>-0.094784</td>
+<td>-0.973536</td>
+<td>-2.622423</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">9</td>
-<td>0.117996</td>
-<td>-0.596137</td>
-<td>1.411912</td>
-<td>0.254441</td>
+<td>-1.196665</td>
+<td>0.391138</td>
+<td>1.438586</td>
+<td>0.389807</td>
 </tr>
 </tbody>
 </table>
@@ -2749,11 +2742,11 @@ dtype: object</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="73">
+<div class="cell" hidden="true" data-execution_count="170">
 <div class="sourceCode cell-code" id="cb100"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="co"># break it into pieces</span></span>
 <span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a>pieces <span class="op">=</span> [df[:<span class="dv">3</span>], df[<span class="dv">3</span>:<span class="dv">7</span>], df[<span class="dv">7</span>:]]</span>
 <span id="cb100-3"><a href="#cb100-3" aria-hidden="true" tabindex="-1"></a>pd.concat(pieces)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="73">
+<div class="cell-output cell-output-display" data-execution_count="170">
 <div>
 
 
@@ -2770,73 +2763,73 @@ dtype: object</code></pre>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
-<td>0.153445</td>
-<td>-1.008416</td>
-<td>-0.505299</td>
-<td>0.025258</td>
+<td>-1.315323</td>
+<td>0.194542</td>
+<td>-0.957266</td>
+<td>0.183061</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
-<td>0.277799</td>
-<td>0.930983</td>
-<td>-0.367915</td>
-<td>-1.232603</td>
+<td>-0.836715</td>
+<td>-0.021930</td>
+<td>-0.990074</td>
+<td>0.338903</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
-<td>0.469069</td>
-<td>-1.270812</td>
-<td>2.911260</td>
-<td>-1.190650</td>
+<td>-0.669019</td>
+<td>-0.827160</td>
+<td>-0.286310</td>
+<td>-0.272068</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">3</td>
-<td>0.067151</td>
-<td>-0.616638</td>
-<td>-1.448431</td>
-<td>0.316322</td>
+<td>-0.942129</td>
+<td>1.032606</td>
+<td>0.603234</td>
+<td>0.059547</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">4</td>
-<td>-0.398150</td>
-<td>-0.282550</td>
-<td>0.085388</td>
-<td>0.825427</td>
+<td>0.415468</td>
+<td>-0.764356</td>
+<td>-1.511200</td>
+<td>-1.034473</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">5</td>
-<td>1.911145</td>
-<td>-0.163210</td>
-<td>0.014488</td>
-<td>0.059030</td>
+<td>0.509728</td>
+<td>0.218553</td>
+<td>0.157009</td>
+<td>0.426563</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">6</td>
-<td>2.202431</td>
-<td>-0.210953</td>
-<td>-0.603069</td>
-<td>1.214237</td>
+<td>-0.848851</td>
+<td>-0.956666</td>
+<td>0.984184</td>
+<td>0.973830</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">7</td>
-<td>-0.503438</td>
-<td>0.378269</td>
-<td>-0.917014</td>
-<td>0.189364</td>
+<td>0.376811</td>
+<td>0.697650</td>
+<td>1.570477</td>
+<td>-2.095464</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">8</td>
-<td>0.847221</td>
-<td>0.674547</td>
-<td>-3.213680</td>
-<td>-1.436244</td>
+<td>-0.752137</td>
+<td>-0.094784</td>
+<td>-0.973536</td>
+<td>-2.622423</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">9</td>
-<td>0.117996</td>
-<td>-0.596137</td>
-<td>1.411912</td>
-<td>0.254441</td>
+<td>-1.196665</td>
+<td>0.391138</td>
+<td>1.438586</td>
+<td>0.389807</td>
 </tr>
 </tbody>
 </table>
@@ -2865,13 +2858,13 @@ Side Note about Adding
 <section id="join" class="level3">
 <h3 class="anchored" data-anchor-id="join">Join</h3>
 <p><code>merge</code> enables SQL style join types along specific columns.</p>
-<div class="cell" hidden="true" data-execution_count="77">
+<div class="cell" hidden="true" data-execution_count="171">
 <div class="sourceCode cell-code" id="cb101"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a>left <span class="op">=</span> pd.DataFrame({<span class="st">"key"</span> : [<span class="st">"foo"</span>, <span class="st">"foo"</span>], <span class="st">"lval"</span> : [<span class="dv">1</span>, <span class="dv">2</span>]})</span>
 <span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a>right <span class="op">=</span> pd.DataFrame({<span class="st">"key"</span> : [<span class="st">"foo"</span>, <span class="st">"foo"</span>], <span class="st">"rval"</span> : [<span class="dv">4</span>, <span class="dv">5</span>]})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" hidden="true" data-execution_count="78">
+<div class="cell" hidden="true" data-execution_count="172">
 <div class="sourceCode cell-code" id="cb102"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>left</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="78">
+<div class="cell-output cell-output-display" data-execution_count="172">
 <div>
 
 
@@ -2900,9 +2893,9 @@ Side Note about Adding
 </div>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="79">
+<div class="cell" hidden="true" data-execution_count="173">
 <div class="sourceCode cell-code" id="cb103"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a>right</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="79">
+<div class="cell-output cell-output-display" data-execution_count="173">
 <div>
 
 
@@ -2931,9 +2924,9 @@ Side Note about Adding
 </div>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="84">
+<div class="cell" hidden="true" data-execution_count="174">
 <div class="sourceCode cell-code" id="cb104"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a>pd.merge(left, right, on<span class="op">=</span><span class="st">"key"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="84">
+<div class="cell-output cell-output-display" data-execution_count="174">
 <div>
 
 
@@ -2977,13 +2970,13 @@ Side Note about Adding
 </div>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="85">
+<div class="cell" hidden="true" data-execution_count="175">
 <div class="sourceCode cell-code" id="cb105"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a>left <span class="op">=</span> pd.DataFrame({<span class="st">"key"</span> : [<span class="st">"foo"</span>, <span class="st">"bar"</span>], <span class="st">"lval"</span> : [<span class="dv">1</span>, <span class="dv">2</span>]})</span>
 <span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a>right <span class="op">=</span> pd.DataFrame({<span class="st">"key"</span> : [<span class="st">"foo"</span>, <span class="st">"bar"</span>], <span class="st">"rval"</span> : [<span class="dv">4</span>, <span class="dv">5</span>]})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" hidden="true" data-execution_count="86">
+<div class="cell" hidden="true" data-execution_count="176">
 <div class="sourceCode cell-code" id="cb106"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a>left</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="86">
+<div class="cell-output cell-output-display" data-execution_count="176">
 <div>
 
 
@@ -3012,9 +3005,9 @@ Side Note about Adding
 </div>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="87">
+<div class="cell" hidden="true" data-execution_count="177">
 <div class="sourceCode cell-code" id="cb107"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a>right</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="87">
+<div class="cell-output cell-output-display" data-execution_count="177">
 <div>
 
 
@@ -3043,9 +3036,9 @@ Side Note about Adding
 </div>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="88">
+<div class="cell" hidden="true" data-execution_count="178">
 <div class="sourceCode cell-code" id="cb108"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a>pd.merge(left, right, on<span class="op">=</span><span class="st">"key"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="88">
+<div class="cell-output cell-output-display" data-execution_count="178">
 <div>
 
 
@@ -3082,7 +3075,7 @@ Side Note about Adding
 <section id="grouping" class="level2">
 <h2 class="anchored" data-anchor-id="grouping">Grouping</h2>
 <p>Group by : a process involving one or more of the following steps: - Splitting - Applying - Combining</p>
-<div class="cell" hidden="true" data-execution_count="89">
+<div class="cell" hidden="true" data-execution_count="179">
 <div class="sourceCode cell-code" id="cb109"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(</span>
 <span id="cb109-2"><a href="#cb109-2" aria-hidden="true" tabindex="-1"></a>{</span>
 <span id="cb109-3"><a href="#cb109-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"A"</span>: [<span class="st">"foo"</span>, <span class="st">"bar"</span>, <span class="st">"foo"</span>, <span class="st">"bar"</span>, <span class="st">"foo"</span>, <span class="st">"bar"</span>, <span class="st">"foo"</span>, <span class="st">"foo"</span>],</span>
@@ -3092,7 +3085,7 @@ Side Note about Adding
 <span id="cb109-7"><a href="#cb109-7" aria-hidden="true" tabindex="-1"></a>})</span>
 <span id="cb109-8"><a href="#cb109-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb109-9"><a href="#cb109-9" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="89">
+<div class="cell-output cell-output-display" data-execution_count="179">
 <div>
 
 
@@ -3111,57 +3104,57 @@ Side Note about Adding
 <td data-quarto-table-cell-role="th">0</td>
 <td>foo</td>
 <td>one</td>
-<td>2.062276</td>
-<td>-1.707116</td>
+<td>-0.661195</td>
+<td>-2.688079</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
 <td>bar</td>
 <td>one</td>
-<td>2.239865</td>
-<td>0.517498</td>
+<td>-1.274385</td>
+<td>-0.839412</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
 <td>foo</td>
 <td>two</td>
-<td>0.030384</td>
-<td>1.126816</td>
+<td>0.178825</td>
+<td>0.365575</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">3</td>
 <td>bar</td>
 <td>three</td>
-<td>0.962275</td>
-<td>-2.151044</td>
+<td>-1.416443</td>
+<td>0.814175</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">4</td>
 <td>foo</td>
 <td>two</td>
-<td>-0.259296</td>
-<td>-0.056988</td>
+<td>-0.270761</td>
+<td>0.044589</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">5</td>
 <td>bar</td>
 <td>two</td>
-<td>0.270636</td>
-<td>-0.328337</td>
+<td>-0.466691</td>
+<td>-1.228478</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">6</td>
 <td>foo</td>
 <td>one</td>
-<td>0.808535</td>
-<td>-0.625021</td>
+<td>0.546438</td>
+<td>-1.432397</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">7</td>
 <td>foo</td>
 <td>three</td>
-<td>-0.406189</td>
-<td>-0.006188</td>
+<td>0.943926</td>
+<td>-1.255270</td>
 </tr>
 </tbody>
 </table>
@@ -3169,9 +3162,9 @@ Side Note about Adding
 </div>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="97">
+<div class="cell" hidden="true" data-execution_count="180">
 <div class="sourceCode cell-code" id="cb110"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a>df.groupby(<span class="st">"A"</span>)[[<span class="st">"C"</span>, <span class="st">"D"</span>]].<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="97">
+<div class="cell-output cell-output-display" data-execution_count="180">
 <div>
 
 
@@ -3191,13 +3184,13 @@ Side Note about Adding
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">bar</td>
-<td>3.472776</td>
-<td>-1.961884</td>
+<td>-3.157519</td>
+<td>-1.253715</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">foo</td>
-<td>2.235710</td>
-<td>-1.268498</td>
+<td>0.737233</td>
+<td>-4.965582</td>
 </tr>
 </tbody>
 </table>
@@ -3205,9 +3198,9 @@ Side Note about Adding
 </div>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="95">
+<div class="cell" hidden="true" data-execution_count="181">
 <div class="sourceCode cell-code" id="cb111"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a>df.groupby([<span class="st">"B"</span>, <span class="st">"A"</span>]).<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="95">
+<div class="cell-output cell-output-display" data-execution_count="181">
 <div>
 
 
@@ -3230,35 +3223,35 @@ Side Note about Adding
 <tr class="odd">
 <td rowspan="2" data-quarto-table-cell-role="th" data-valign="top">one</td>
 <td data-quarto-table-cell-role="th">bar</td>
-<td>2.239865</td>
-<td>0.517498</td>
+<td>-1.274385</td>
+<td>-0.839412</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">foo</td>
-<td>2.870811</td>
-<td>-2.332137</td>
+<td>-0.114757</td>
+<td>-4.120476</td>
 </tr>
 <tr class="odd">
 <td rowspan="2" data-quarto-table-cell-role="th" data-valign="top">three</td>
 <td data-quarto-table-cell-role="th">bar</td>
-<td>0.962275</td>
-<td>-2.151044</td>
+<td>-1.416443</td>
+<td>0.814175</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">foo</td>
-<td>-0.406189</td>
-<td>-0.006188</td>
+<td>0.943926</td>
+<td>-1.255270</td>
 </tr>
 <tr class="odd">
 <td rowspan="2" data-quarto-table-cell-role="th" data-valign="top">two</td>
 <td data-quarto-table-cell-role="th">bar</td>
-<td>0.270636</td>
-<td>-0.328337</td>
+<td>-0.466691</td>
+<td>-1.228478</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">foo</td>
-<td>-0.228912</td>
-<td>1.069828</td>
+<td>-0.091936</td>
+<td>0.410164</td>
 </tr>
 </tbody>
 </table>
@@ -3269,7 +3262,7 @@ Side Note about Adding
 </section>
 <section id="reshaping" class="level2">
 <h2 class="anchored" data-anchor-id="reshaping">Reshaping</h2>
-<div class="cell" hidden="true" data-execution_count="100">
+<div class="cell" hidden="true" data-execution_count="182">
 <div class="sourceCode cell-code" id="cb112"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a>tuples <span class="op">=</span> <span class="bu">list</span>(</span>
 <span id="cb112-2"><a href="#cb112-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">zip</span>(</span>
 <span id="cb112-3"><a href="#cb112-3" aria-hidden="true" tabindex="-1"></a>        [<span class="st">"bar"</span>, <span class="st">"bar"</span>, <span class="st">"baz"</span>, <span class="st">"baz"</span>, <span class="st">"foo"</span>, <span class="st">"foo"</span>, <span class="st">"qux"</span>, <span class="st">"qux"</span>],</span>
@@ -3284,7 +3277,7 @@ Side Note about Adding
 <span id="cb112-12"><a href="#cb112-12" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> df[:<span class="dv">4</span>]</span>
 <span id="cb112-13"><a href="#cb112-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb112-14"><a href="#cb112-14" aria-hidden="true" tabindex="-1"></a>df2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="100">
+<div class="cell-output cell-output-display" data-execution_count="182">
 <div>
 
 
@@ -3307,24 +3300,24 @@ Side Note about Adding
 <tr class="odd">
 <td rowspan="2" data-quarto-table-cell-role="th" data-valign="top">bar</td>
 <td data-quarto-table-cell-role="th">one</td>
-<td>1.733548</td>
-<td>0.643470</td>
+<td>-1.685092</td>
+<td>0.399853</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">two</td>
-<td>1.266536</td>
-<td>1.682044</td>
+<td>0.574113</td>
+<td>0.099702</td>
 </tr>
 <tr class="odd">
 <td rowspan="2" data-quarto-table-cell-role="th" data-valign="top">baz</td>
 <td data-quarto-table-cell-role="th">one</td>
-<td>-0.773087</td>
-<td>-0.106262</td>
+<td>-0.449388</td>
+<td>0.847587</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">two</td>
-<td>-0.143492</td>
-<td>-0.695517</td>
+<td>0.143620</td>
+<td>-1.024022</td>
 </tr>
 </tbody>
 </table>
@@ -3333,25 +3326,25 @@ Side Note about Adding
 </div>
 </div>
 <p><code>stack()</code> method compresses a level in the DataFrame’s columns</p>
-<div class="cell" hidden="true" data-execution_count="101">
+<div class="cell" hidden="true" data-execution_count="183">
 <div class="sourceCode cell-code" id="cb113"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a>stacked <span class="op">=</span> df2.stack()</span>
 <span id="cb113-2"><a href="#cb113-2" aria-hidden="true" tabindex="-1"></a>stacked</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="101">
+<div class="cell-output cell-output-display" data-execution_count="183">
 <pre><code>first  second   
-bar    one     A    1.733548
-               B    0.643470
-       two     A    1.266536
-               B    1.682044
-baz    one     A   -0.773087
-               B   -0.106262
-       two     A   -0.143492
-               B   -0.695517
+bar    one     A   -1.685092
+               B    0.399853
+       two     A    0.574113
+               B    0.099702
+baz    one     A   -0.449388
+               B    0.847587
+       two     A    0.143620
+               B   -1.024022
 dtype: float64</code></pre>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="106">
+<div class="cell" hidden="true" data-execution_count="184">
 <div class="sourceCode cell-code" id="cb115"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a>stacked.unstack()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="106">
+<div class="cell-output cell-output-display" data-execution_count="184">
 <div>
 
 
@@ -3374,24 +3367,24 @@ dtype: float64</code></pre>
 <tr class="odd">
 <td rowspan="2" data-quarto-table-cell-role="th" data-valign="top">bar</td>
 <td data-quarto-table-cell-role="th">one</td>
-<td>1.733548</td>
-<td>0.643470</td>
+<td>-1.685092</td>
+<td>0.399853</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">two</td>
-<td>1.266536</td>
-<td>1.682044</td>
+<td>0.574113</td>
+<td>0.099702</td>
 </tr>
 <tr class="odd">
 <td rowspan="2" data-quarto-table-cell-role="th" data-valign="top">baz</td>
 <td data-quarto-table-cell-role="th">one</td>
-<td>-0.773087</td>
-<td>-0.106262</td>
+<td>-0.449388</td>
+<td>0.847587</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">two</td>
-<td>-0.143492</td>
-<td>-0.695517</td>
+<td>0.143620</td>
+<td>-1.024022</td>
 </tr>
 </tbody>
 </table>
@@ -3399,9 +3392,9 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="107">
+<div class="cell" hidden="true" data-execution_count="185">
 <div class="sourceCode cell-code" id="cb116"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a>stacked.unstack(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="107">
+<div class="cell-output cell-output-display" data-execution_count="185">
 <div>
 
 
@@ -3424,24 +3417,24 @@ dtype: float64</code></pre>
 <tr class="odd">
 <td rowspan="2" data-quarto-table-cell-role="th" data-valign="top">bar</td>
 <td data-quarto-table-cell-role="th">A</td>
-<td>1.733548</td>
-<td>1.266536</td>
+<td>-1.685092</td>
+<td>0.574113</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">B</td>
-<td>0.643470</td>
-<td>1.682044</td>
+<td>0.399853</td>
+<td>0.099702</td>
 </tr>
 <tr class="odd">
 <td rowspan="2" data-quarto-table-cell-role="th" data-valign="top">baz</td>
 <td data-quarto-table-cell-role="th">A</td>
-<td>-0.773087</td>
-<td>-0.143492</td>
+<td>-0.449388</td>
+<td>0.143620</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">B</td>
-<td>-0.106262</td>
-<td>-0.695517</td>
+<td>0.847587</td>
+<td>-1.024022</td>
 </tr>
 </tbody>
 </table>
@@ -3449,9 +3442,9 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="108">
+<div class="cell" hidden="true" data-execution_count="186">
 <div class="sourceCode cell-code" id="cb117"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a>stacked.unstack(<span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="108">
+<div class="cell-output cell-output-display" data-execution_count="186">
 <div>
 
 
@@ -3474,24 +3467,24 @@ dtype: float64</code></pre>
 <tr class="odd">
 <td rowspan="2" data-quarto-table-cell-role="th" data-valign="top">one</td>
 <td data-quarto-table-cell-role="th">A</td>
-<td>1.733548</td>
-<td>-0.773087</td>
+<td>-1.685092</td>
+<td>-0.449388</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">B</td>
-<td>0.643470</td>
-<td>-0.106262</td>
+<td>0.399853</td>
+<td>0.847587</td>
 </tr>
 <tr class="odd">
 <td rowspan="2" data-quarto-table-cell-role="th" data-valign="top">two</td>
 <td data-quarto-table-cell-role="th">A</td>
-<td>1.266536</td>
-<td>-0.143492</td>
+<td>0.574113</td>
+<td>0.143620</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">B</td>
-<td>1.682044</td>
-<td>-0.695517</td>
+<td>0.099702</td>
+<td>-1.024022</td>
 </tr>
 </tbody>
 </table>
@@ -3501,7 +3494,7 @@ dtype: float64</code></pre>
 </div>
 <section id="pivot-tables" class="level3">
 <h3 class="anchored" data-anchor-id="pivot-tables">Pivot tables</h3>
-<div class="cell" hidden="true" data-execution_count="109">
+<div class="cell" hidden="true" data-execution_count="187">
 <div class="sourceCode cell-code" id="cb118"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(</span>
 <span id="cb118-2"><a href="#cb118-2" aria-hidden="true" tabindex="-1"></a>{</span>
 <span id="cb118-3"><a href="#cb118-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"A"</span>: [<span class="st">"one"</span>, <span class="st">"one"</span>, <span class="st">"two"</span>, <span class="st">"three"</span>] <span class="op">*</span> <span class="dv">3</span>,</span>
@@ -3513,7 +3506,7 @@ dtype: float64</code></pre>
 <span id="cb118-9"><a href="#cb118-9" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb118-10"><a href="#cb118-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb118-11"><a href="#cb118-11" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="109">
+<div class="cell-output cell-output-display" data-execution_count="187">
 <div>
 
 
@@ -3534,96 +3527,96 @@ dtype: float64</code></pre>
 <td>one</td>
 <td>A</td>
 <td>foo</td>
-<td>0.043140</td>
-<td>-1.331849</td>
+<td>0.418617</td>
+<td>-0.377514</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
 <td>one</td>
 <td>B</td>
 <td>foo</td>
-<td>-0.476268</td>
-<td>0.664963</td>
+<td>-0.603483</td>
+<td>0.236711</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
 <td>two</td>
 <td>C</td>
 <td>foo</td>
-<td>-1.018212</td>
-<td>1.279238</td>
+<td>0.307053</td>
+<td>2.079801</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">3</td>
 <td>three</td>
 <td>A</td>
 <td>bar</td>
-<td>-0.473956</td>
-<td>1.173957</td>
+<td>-0.309968</td>
+<td>-0.841220</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">4</td>
 <td>one</td>
 <td>B</td>
 <td>bar</td>
-<td>0.309105</td>
-<td>2.049337</td>
+<td>0.445995</td>
+<td>-0.257515</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">5</td>
 <td>one</td>
 <td>C</td>
 <td>bar</td>
-<td>0.338232</td>
-<td>0.813336</td>
+<td>-0.078288</td>
+<td>0.214815</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">6</td>
 <td>two</td>
 <td>A</td>
 <td>foo</td>
-<td>-0.167626</td>
-<td>-1.301410</td>
+<td>1.457046</td>
+<td>0.010999</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">7</td>
 <td>three</td>
 <td>B</td>
 <td>foo</td>
-<td>1.412266</td>
-<td>0.991458</td>
+<td>0.569492</td>
+<td>-0.299719</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">8</td>
 <td>one</td>
 <td>C</td>
 <td>foo</td>
-<td>-0.507957</td>
-<td>0.678728</td>
+<td>-0.405340</td>
+<td>-1.646370</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">9</td>
 <td>one</td>
 <td>A</td>
 <td>bar</td>
-<td>-0.304315</td>
-<td>-0.625889</td>
+<td>-1.234561</td>
+<td>0.847220</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">10</td>
 <td>two</td>
 <td>B</td>
 <td>bar</td>
-<td>0.518126</td>
-<td>1.607797</td>
+<td>-0.579830</td>
+<td>0.435772</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">11</td>
 <td>three</td>
 <td>C</td>
 <td>bar</td>
-<td>0.888700</td>
-<td>1.490596</td>
+<td>-0.347565</td>
+<td>-1.109582</td>
 </tr>
 </tbody>
 </table>
@@ -3631,9 +3624,9 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="110">
+<div class="cell" hidden="true" data-execution_count="188">
 <div class="sourceCode cell-code" id="cb119"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a>pd.pivot_table(df, values<span class="op">=</span><span class="st">"D"</span>, index<span class="op">=</span>[<span class="st">"A"</span>, <span class="st">"B"</span>], columns<span class="op">=</span><span class="st">"C"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="110">
+<div class="cell-output cell-output-display" data-execution_count="188">
 <div>
 
 
@@ -3656,50 +3649,50 @@ dtype: float64</code></pre>
 <tr class="odd">
 <td rowspan="3" data-quarto-table-cell-role="th" data-valign="top">one</td>
 <td data-quarto-table-cell-role="th">A</td>
-<td>-0.304315</td>
-<td>0.043140</td>
+<td>-1.234561</td>
+<td>0.418617</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">B</td>
-<td>0.309105</td>
-<td>-0.476268</td>
+<td>0.445995</td>
+<td>-0.603483</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">C</td>
-<td>0.338232</td>
-<td>-0.507957</td>
+<td>-0.078288</td>
+<td>-0.405340</td>
 </tr>
 <tr class="even">
 <td rowspan="3" data-quarto-table-cell-role="th" data-valign="top">three</td>
 <td data-quarto-table-cell-role="th">A</td>
-<td>-0.473956</td>
+<td>-0.309968</td>
 <td>NaN</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">B</td>
 <td>NaN</td>
-<td>1.412266</td>
+<td>0.569492</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">C</td>
-<td>0.888700</td>
+<td>-0.347565</td>
 <td>NaN</td>
 </tr>
 <tr class="odd">
 <td rowspan="3" data-quarto-table-cell-role="th" data-valign="top">two</td>
 <td data-quarto-table-cell-role="th">A</td>
 <td>NaN</td>
-<td>-0.167626</td>
+<td>1.457046</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">B</td>
-<td>0.518126</td>
+<td>-0.579830</td>
 <td>NaN</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">C</td>
 <td>NaN</td>
-<td>-1.018212</td>
+<td>0.307053</td>
 </tr>
 </tbody>
 </table>
@@ -3711,117 +3704,117 @@ dtype: float64</code></pre>
 </section>
 <section id="time-series" class="level2">
 <h2 class="anchored" data-anchor-id="time-series">Time series</h2>
-<div class="cell" hidden="true" data-execution_count="111">
+<div class="cell" hidden="true" data-execution_count="189">
 <div class="sourceCode cell-code" id="cb120"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> pd.date_range(<span class="st">"1/1/2012"</span>, periods<span class="op">=</span><span class="dv">100</span>, freq<span class="op">=</span><span class="st">"S"</span>)</span>
 <span id="cb120-2"><a href="#cb120-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb120-3"><a href="#cb120-3" aria-hidden="true" tabindex="-1"></a>ts <span class="op">=</span> pd.Series(np.random.randint(<span class="dv">0</span>, <span class="dv">500</span>, <span class="bu">len</span>(rng)), index<span class="op">=</span>rng)</span>
 <span id="cb120-4"><a href="#cb120-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb120-5"><a href="#cb120-5" aria-hidden="true" tabindex="-1"></a>ts.resample(<span class="st">"5Min"</span>).<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="111">
-<pre><code>2012-01-01    24080
+<div class="cell-output cell-output-display" data-execution_count="189">
+<pre><code>2012-01-01    24668
 Freq: 5T, dtype: int64</code></pre>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="114">
+<div class="cell" hidden="true" data-execution_count="190">
 <div class="sourceCode cell-code" id="cb122"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a>ts_utc <span class="op">=</span> ts.tz_localize(<span class="st">"UTC"</span>)</span>
 <span id="cb122-2"><a href="#cb122-2" aria-hidden="true" tabindex="-1"></a>ts_utc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="114">
-<pre><code>2012-01-01 00:00:00+00:00    349
-2012-01-01 00:00:01+00:00    369
-2012-01-01 00:00:02+00:00    312
-2012-01-01 00:00:03+00:00    215
-2012-01-01 00:00:04+00:00    202
+<div class="cell-output cell-output-display" data-execution_count="190">
+<pre><code>2012-01-01 00:00:00+00:00     84
+2012-01-01 00:00:01+00:00     89
+2012-01-01 00:00:02+00:00    226
+2012-01-01 00:00:03+00:00    123
+2012-01-01 00:00:04+00:00    181
                             ... 
-2012-01-01 00:01:35+00:00    195
-2012-01-01 00:01:36+00:00    186
-2012-01-01 00:01:37+00:00    368
-2012-01-01 00:01:38+00:00     43
-2012-01-01 00:01:39+00:00    354
+2012-01-01 00:01:35+00:00    356
+2012-01-01 00:01:36+00:00    152
+2012-01-01 00:01:37+00:00    209
+2012-01-01 00:01:38+00:00    297
+2012-01-01 00:01:39+00:00    407
 Freq: S, Length: 100, dtype: int64</code></pre>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="115">
+<div class="cell" hidden="true" data-execution_count="191">
 <div class="sourceCode cell-code" id="cb124"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a>ts_utc.tz_convert(<span class="st">"US/Eastern"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="115">
-<pre><code>2011-12-31 19:00:00-05:00    349
-2011-12-31 19:00:01-05:00    369
-2011-12-31 19:00:02-05:00    312
-2011-12-31 19:00:03-05:00    215
-2011-12-31 19:00:04-05:00    202
+<div class="cell-output cell-output-display" data-execution_count="191">
+<pre><code>2011-12-31 19:00:00-05:00     84
+2011-12-31 19:00:01-05:00     89
+2011-12-31 19:00:02-05:00    226
+2011-12-31 19:00:03-05:00    123
+2011-12-31 19:00:04-05:00    181
                             ... 
-2011-12-31 19:01:35-05:00    195
-2011-12-31 19:01:36-05:00    186
-2011-12-31 19:01:37-05:00    368
-2011-12-31 19:01:38-05:00     43
-2011-12-31 19:01:39-05:00    354
+2011-12-31 19:01:35-05:00    356
+2011-12-31 19:01:36-05:00    152
+2011-12-31 19:01:37-05:00    209
+2011-12-31 19:01:38-05:00    297
+2011-12-31 19:01:39-05:00    407
 Freq: S, Length: 100, dtype: int64</code></pre>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="116">
+<div class="cell" hidden="true" data-execution_count="192">
 <div class="sourceCode cell-code" id="cb126"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> pd.date_range(<span class="st">"1/1/2012"</span>, periods<span class="op">=</span><span class="dv">5</span>, freq<span class="op">=</span><span class="st">"M"</span>)</span>
 <span id="cb126-2"><a href="#cb126-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb126-3"><a href="#cb126-3" aria-hidden="true" tabindex="-1"></a>ts <span class="op">=</span> pd.Series(np.random.randn(<span class="bu">len</span>(rng)) , index<span class="op">=</span>rng)</span>
 <span id="cb126-4"><a href="#cb126-4" aria-hidden="true" tabindex="-1"></a>ts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="116">
-<pre><code>2012-01-31    0.711697
-2012-02-29   -0.309698
-2012-03-31   -0.076134
-2012-04-30    0.422104
-2012-05-31   -2.403484
+<div class="cell-output cell-output-display" data-execution_count="192">
+<pre><code>2012-01-31    0.765507
+2012-02-29    1.127197
+2012-03-31   -1.091730
+2012-04-30    0.555877
+2012-05-31    1.218228
 Freq: M, dtype: float64</code></pre>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="118">
+<div class="cell" hidden="true" data-execution_count="193">
 <div class="sourceCode cell-code" id="cb128"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a>ps <span class="op">=</span> ts.to_period()</span>
 <span id="cb128-2"><a href="#cb128-2" aria-hidden="true" tabindex="-1"></a>ps</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="118">
-<pre><code>2012-01    0.711697
-2012-02   -0.309698
-2012-03   -0.076134
-2012-04    0.422104
-2012-05   -2.403484
+<div class="cell-output cell-output-display" data-execution_count="193">
+<pre><code>2012-01    0.765507
+2012-02    1.127197
+2012-03   -1.091730
+2012-04    0.555877
+2012-05    1.218228
 Freq: M, dtype: float64</code></pre>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="121">
+<div class="cell" hidden="true" data-execution_count="194">
 <div class="sourceCode cell-code" id="cb130"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a>ps.to_timestamp()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="121">
-<pre><code>2012-01-01    0.711697
-2012-02-01   -0.309698
-2012-03-01   -0.076134
-2012-04-01    0.422104
-2012-05-01   -2.403484
+<div class="cell-output cell-output-display" data-execution_count="194">
+<pre><code>2012-01-01    0.765507
+2012-02-01    1.127197
+2012-03-01   -1.091730
+2012-04-01    0.555877
+2012-05-01    1.218228
 Freq: MS, dtype: float64</code></pre>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="123">
+<div class="cell" hidden="true" data-execution_count="195">
 <div class="sourceCode cell-code" id="cb132"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a>prng <span class="op">=</span> pd.period_range(<span class="st">"1990Q1"</span>, <span class="st">"2000Q4"</span>, freq<span class="op">=</span><span class="st">"Q-NOV"</span>)</span>
 <span id="cb132-2"><a href="#cb132-2" aria-hidden="true" tabindex="-1"></a>ts <span class="op">=</span> pd.Series(np.random.randn(<span class="bu">len</span>(prng)), prng)</span>
 <span id="cb132-3"><a href="#cb132-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb132-4"><a href="#cb132-4" aria-hidden="true" tabindex="-1"></a>ts.index <span class="op">=</span> (prng.asfreq(<span class="st">'M'</span>, <span class="st">'e'</span>) <span class="op">+</span> <span class="dv">1</span>).asfreq(<span class="st">'H'</span>, <span class="st">'s'</span>) <span class="op">+</span> <span class="dv">9</span></span>
 <span id="cb132-5"><a href="#cb132-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb132-6"><a href="#cb132-6" aria-hidden="true" tabindex="-1"></a>ts.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="123">
-<pre><code>1990-03-01 09:00    0.789300
-1990-06-01 09:00   -1.827196
-1990-09-01 09:00   -0.662090
-1990-12-01 09:00    0.810399
-1991-03-01 09:00    0.658745
+<div class="cell-output cell-output-display" data-execution_count="195">
+<pre><code>1990-03-01 09:00   -1.169327
+1990-06-01 09:00    1.724996
+1990-09-01 09:00   -0.412138
+1990-12-01 09:00   -1.391022
+1991-03-01 09:00   -0.652659
 Freq: H, dtype: float64</code></pre>
 </div>
 </div>
 </section>
 <section id="categoricals" class="level2">
 <h2 class="anchored" data-anchor-id="categoricals">Categoricals</h2>
-<div class="cell" hidden="true" data-execution_count="124">
+<div class="cell" hidden="true" data-execution_count="196">
 <div class="sourceCode cell-code" id="cb134"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(</span>
 <span id="cb134-2"><a href="#cb134-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"id"</span>: [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>], <span class="st">"raw_grade"</span>: [<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"b"</span>, <span class="st">"a"</span>, <span class="st">"a"</span>, <span class="st">"e"</span>]}</span>
 <span id="cb134-3"><a href="#cb134-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" hidden="true" data-execution_count="125">
+<div class="cell" hidden="true" data-execution_count="197">
 <div class="sourceCode cell-code" id="cb135"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"grade"</span>] <span class="op">=</span> df[<span class="st">"raw_grade"</span>].astype(<span class="st">"category"</span>)</span>
 <span id="cb135-2"><a href="#cb135-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"grade"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="125">
+<div class="cell-output cell-output-display" data-execution_count="197">
 <pre><code>0    a
 1    b
 2    b
@@ -3832,12 +3825,12 @@ Name: grade, dtype: category
 Categories (3, object): ['a', 'b', 'e']</code></pre>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="127">
+<div class="cell" hidden="true" data-execution_count="198">
 <div class="sourceCode cell-code" id="cb137"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb137-1"><a href="#cb137-1" aria-hidden="true" tabindex="-1"></a>new_categories <span class="op">=</span> [<span class="st">"very good"</span>, <span class="st">"good"</span>, <span class="st">"very bad"</span>]</span>
 <span id="cb137-2"><a href="#cb137-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb137-3"><a href="#cb137-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"grade"</span>] <span class="op">=</span> df[<span class="st">"grade"</span>].cat.rename_categories(new_categories)</span>
 <span id="cb137-4"><a href="#cb137-4" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"grade"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="127">
+<div class="cell-output cell-output-display" data-execution_count="198">
 <pre><code>0    very good
 1         good
 2         good
@@ -3848,13 +3841,13 @@ Name: grade, dtype: category
 Categories (3, object): ['very good', 'good', 'very bad']</code></pre>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="128">
+<div class="cell" hidden="true" data-execution_count="199">
 <div class="sourceCode cell-code" id="cb139"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb139-1"><a href="#cb139-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"grade"</span>] <span class="op">=</span> df[<span class="st">"grade"</span>].cat.set_categories(</span>
 <span id="cb139-2"><a href="#cb139-2" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"very bad"</span>, <span class="st">"bad"</span>, <span class="st">"medium"</span>, <span class="st">"good"</span>, <span class="st">"very good"</span>]</span>
 <span id="cb139-3"><a href="#cb139-3" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb139-4"><a href="#cb139-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb139-5"><a href="#cb139-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"grade"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="128">
+<div class="cell-output cell-output-display" data-execution_count="199">
 <pre><code>0    very good
 1         good
 2         good
@@ -3865,9 +3858,9 @@ Name: grade, dtype: category
 Categories (5, object): ['very bad', 'bad', 'medium', 'good', 'very good']</code></pre>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="129">
+<div class="cell" hidden="true" data-execution_count="200">
 <div class="sourceCode cell-code" id="cb141"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb141-1"><a href="#cb141-1" aria-hidden="true" tabindex="-1"></a>df.sort_values(by<span class="op">=</span><span class="st">"grade"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="129">
+<div class="cell-output cell-output-display" data-execution_count="200">
 <div>
 
 
@@ -3923,9 +3916,9 @@ Categories (5, object): ['very bad', 'bad', 'medium', 'good', 'very good']</code
 </div>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="130">
+<div class="cell" hidden="true" data-execution_count="201">
 <div class="sourceCode cell-code" id="cb142"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb142-1"><a href="#cb142-1" aria-hidden="true" tabindex="-1"></a>df.groupby(<span class="st">"grade"</span>).size()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="130">
+<div class="cell-output cell-output-display" data-execution_count="201">
 <pre><code>grade
 very bad     1
 bad          0
@@ -3938,25 +3931,25 @@ dtype: int64</code></pre>
 </section>
 <section id="plotting" class="level2">
 <h2 class="anchored" data-anchor-id="plotting">Plotting</h2>
-<div class="cell" hidden="true" data-execution_count="131">
+<div class="cell" hidden="true" data-execution_count="202">
 <div class="sourceCode cell-code" id="cb144"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb144-1"><a href="#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb144-2"><a href="#cb144-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb144-3"><a href="#cb144-3" aria-hidden="true" tabindex="-1"></a>plt.close(<span class="st">"all"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" hidden="true" data-execution_count="133">
+<div class="cell" hidden="true" data-execution_count="203">
 <div class="sourceCode cell-code" id="cb145"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb145-1"><a href="#cb145-1" aria-hidden="true" tabindex="-1"></a>ts <span class="op">=</span> pd.Series(np.random.randn(<span class="dv">1000</span>), index<span class="op">=</span>pd.date_range(<span class="st">"1/1/2000"</span>, periods<span class="op">=</span><span class="dv">1000</span>))</span>
 <span id="cb145-2"><a href="#cb145-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb145-3"><a href="#cb145-3" aria-hidden="true" tabindex="-1"></a>ts <span class="op">=</span> ts.cumsum()</span>
 <span id="cb145-4"><a href="#cb145-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb145-5"><a href="#cb145-5" aria-hidden="true" tabindex="-1"></a>ts.plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="133">
+<div class="cell-output cell-output-display" data-execution_count="203">
 <pre><code>&lt;Axes: &gt;</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <p><img src="2.2-Data_Preprocessing_files/figure-html/cell-99-output-2.png" class="img-fluid"></p>
 </div>
 </div>
-<div class="cell" hidden="true" data-execution_count="139">
+<div class="cell" hidden="true" data-execution_count="204">
 <div class="sourceCode cell-code" id="cb147"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb147-1"><a href="#cb147-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(</span>
 <span id="cb147-2"><a href="#cb147-2" aria-hidden="true" tabindex="-1"></a>    np.random.randn(<span class="dv">1000</span>, <span class="dv">4</span>), index<span class="op">=</span>ts.index, columns<span class="op">=</span>[<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span>]</span>
 <span id="cb147-3"><a href="#cb147-3" aria-hidden="true" tabindex="-1"></a>)</span>
@@ -3968,8 +3961,8 @@ dtype: int64</code></pre>
 <span id="cb147-9"><a href="#cb147-9" aria-hidden="true" tabindex="-1"></a>df.plot()</span>
 <span id="cb147-10"><a href="#cb147-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb147-11"><a href="#cb147-11" aria-hidden="true" tabindex="-1"></a>plt.legend(loc<span class="op">=</span><span class="st">"best"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="139">
-<pre><code>&lt;matplotlib.legend.Legend at 0x7ff509ff9a20&gt;</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="204">
+<pre><code>&lt;matplotlib.legend.Legend at 0x7efdfd009870&gt;</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <pre><code>&lt;Figure size 640x480 with 0 Axes&gt;</code></pre>
@@ -3981,12 +3974,12 @@ dtype: int64</code></pre>
 </section>
 <section id="importing-and-exporting-data" class="level2">
 <h2 class="anchored" data-anchor-id="importing-and-exporting-data">Importing and exporting data</h2>
-<div class="cell" hidden="true" data-execution_count="140">
+<div class="cell" hidden="true" data-execution_count="205">
 <div class="sourceCode cell-code" id="cb150"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb150-1"><a href="#cb150-1" aria-hidden="true" tabindex="-1"></a>df.to_csv(<span class="st">"foo.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" hidden="true" data-execution_count="141">
+<div class="cell" hidden="true" data-execution_count="206">
 <div class="sourceCode cell-code" id="cb151"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb151-1"><a href="#cb151-1" aria-hidden="true" tabindex="-1"></a>pd.read_csv(<span class="st">"foo.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="141">
+<div class="cell-output cell-output-display" data-execution_count="206">
 <div>
 
 
@@ -4005,42 +3998,42 @@ dtype: int64</code></pre>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
 <td>2000-01-01</td>
-<td>0.119829</td>
-<td>0.256524</td>
-<td>-0.021635</td>
-<td>-0.553218</td>
+<td>-0.269493</td>
+<td>1.081501</td>
+<td>0.603901</td>
+<td>-0.033339</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
 <td>2000-01-02</td>
-<td>-0.519971</td>
-<td>-0.113309</td>
-<td>0.710283</td>
-<td>0.269571</td>
+<td>1.242859</td>
+<td>1.376335</td>
+<td>0.566568</td>
+<td>-1.290247</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
 <td>2000-01-03</td>
-<td>-1.643742</td>
-<td>-0.387483</td>
-<td>0.172760</td>
-<td>0.842172</td>
+<td>3.420941</td>
+<td>1.899981</td>
+<td>1.670551</td>
+<td>-2.792631</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">3</td>
 <td>2000-01-04</td>
-<td>-1.505119</td>
-<td>0.233312</td>
-<td>-1.027990</td>
-<td>1.072677</td>
+<td>2.089820</td>
+<td>2.938649</td>
+<td>4.142323</td>
+<td>-2.180101</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">4</td>
 <td>2000-01-05</td>
-<td>-0.515360</td>
-<td>-0.130559</td>
-<td>-2.820043</td>
-<td>0.949913</td>
+<td>1.051018</td>
+<td>4.452224</td>
+<td>1.658182</td>
+<td>-0.738777</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">...</td>
@@ -4053,42 +4046,42 @@ dtype: int64</code></pre>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">995</td>
 <td>2002-09-22</td>
-<td>-12.310366</td>
-<td>41.116491</td>
-<td>38.013362</td>
-<td>39.133126</td>
+<td>-39.659784</td>
+<td>13.756241</td>
+<td>2.535603</td>
+<td>-22.950679</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">996</td>
 <td>2002-09-23</td>
-<td>-12.070904</td>
-<td>43.043589</td>
-<td>38.085873</td>
-<td>39.285890</td>
+<td>-41.912564</td>
+<td>15.577399</td>
+<td>2.390166</td>
+<td>-21.188588</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">997</td>
 <td>2002-09-24</td>
-<td>-11.423160</td>
-<td>42.627345</td>
-<td>39.041164</td>
-<td>40.857578</td>
+<td>-42.608957</td>
+<td>15.501803</td>
+<td>1.672575</td>
+<td>-21.438072</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">998</td>
 <td>2002-09-25</td>
-<td>-11.291670</td>
-<td>41.719354</td>
-<td>37.736052</td>
-<td>39.475829</td>
+<td>-42.864169</td>
+<td>15.232265</td>
+<td>1.771158</td>
+<td>-20.989292</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">999</td>
 <td>2002-09-26</td>
-<td>-10.932869</td>
-<td>39.653972</td>
-<td>36.900024</td>
-<td>40.507333</td>
+<td>-42.959411</td>
+<td>16.574275</td>
+<td>0.866194</td>
+<td>-19.453527</td>
 </tr>
 </tbody>
 </table>
@@ -4099,12 +4092,12 @@ dtype: int64</code></pre>
 </div>
 <section id="hdf5" class="level3">
 <h3 class="anchored" data-anchor-id="hdf5">HDF5</h3>
-<div class="cell" hidden="true" data-execution_count="143">
+<div class="cell" hidden="true" data-execution_count="207">
 <div class="sourceCode cell-code" id="cb152"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb152-1"><a href="#cb152-1" aria-hidden="true" tabindex="-1"></a>df.to_hdf(<span class="st">"foo.h5"</span>, <span class="st">"df"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" hidden="true" data-execution_count="144">
+<div class="cell" hidden="true" data-execution_count="208">
 <div class="sourceCode cell-code" id="cb153"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb153-1"><a href="#cb153-1" aria-hidden="true" tabindex="-1"></a>pd.read_hdf(<span class="st">"foo.h5"</span>, <span class="st">"df"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="144">
+<div class="cell-output cell-output-display" data-execution_count="208">
 <div>
 
 
@@ -4121,38 +4114,38 @@ dtype: int64</code></pre>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2000-01-01</td>
-<td>0.119829</td>
-<td>0.256524</td>
-<td>-0.021635</td>
-<td>-0.553218</td>
+<td>-0.269493</td>
+<td>1.081501</td>
+<td>0.603901</td>
+<td>-0.033339</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2000-01-02</td>
-<td>-0.519971</td>
-<td>-0.113309</td>
-<td>0.710283</td>
-<td>0.269571</td>
+<td>1.242859</td>
+<td>1.376335</td>
+<td>0.566568</td>
+<td>-1.290247</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2000-01-03</td>
-<td>-1.643742</td>
-<td>-0.387483</td>
-<td>0.172760</td>
-<td>0.842172</td>
+<td>3.420941</td>
+<td>1.899981</td>
+<td>1.670551</td>
+<td>-2.792631</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2000-01-04</td>
-<td>-1.505119</td>
-<td>0.233312</td>
-<td>-1.027990</td>
-<td>1.072677</td>
+<td>2.089820</td>
+<td>2.938649</td>
+<td>4.142323</td>
+<td>-2.180101</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2000-01-05</td>
-<td>-0.515360</td>
-<td>-0.130559</td>
-<td>-2.820043</td>
-<td>0.949913</td>
+<td>1.051018</td>
+<td>4.452224</td>
+<td>1.658182</td>
+<td>-0.738777</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">...</td>
@@ -4163,38 +4156,38 @@ dtype: int64</code></pre>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2002-09-22</td>
-<td>-12.310366</td>
-<td>41.116491</td>
-<td>38.013362</td>
-<td>39.133126</td>
+<td>-39.659784</td>
+<td>13.756241</td>
+<td>2.535603</td>
+<td>-22.950679</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2002-09-23</td>
-<td>-12.070904</td>
-<td>43.043589</td>
-<td>38.085873</td>
-<td>39.285890</td>
+<td>-41.912564</td>
+<td>15.577399</td>
+<td>2.390166</td>
+<td>-21.188588</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2002-09-24</td>
-<td>-11.423160</td>
-<td>42.627345</td>
-<td>39.041164</td>
-<td>40.857578</td>
+<td>-42.608957</td>
+<td>15.501803</td>
+<td>1.672575</td>
+<td>-21.438072</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2002-09-25</td>
-<td>-11.291670</td>
-<td>41.719354</td>
-<td>37.736052</td>
-<td>39.475829</td>
+<td>-42.864169</td>
+<td>15.232265</td>
+<td>1.771158</td>
+<td>-20.989292</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2002-09-26</td>
-<td>-10.932869</td>
-<td>39.653972</td>
-<td>36.900024</td>
-<td>40.507333</td>
+<td>-42.959411</td>
+<td>16.574275</td>
+<td>0.866194</td>
+<td>-19.453527</td>
 </tr>
 </tbody>
 </table>
@@ -4206,12 +4199,12 @@ dtype: int64</code></pre>
 </section>
 <section id="excel" class="level3">
 <h3 class="anchored" data-anchor-id="excel">Excel</h3>
-<div class="cell" hidden="true" data-execution_count="146">
+<div class="cell" hidden="true" data-execution_count="209">
 <div class="sourceCode cell-code" id="cb154"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb154-1"><a href="#cb154-1" aria-hidden="true" tabindex="-1"></a>df.to_excel(<span class="st">"foo.xlsx"</span>, sheet_name<span class="op">=</span><span class="st">"Sheet1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" hidden="true" data-execution_count="147">
+<div class="cell" hidden="true" data-execution_count="210">
 <div class="sourceCode cell-code" id="cb155"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb155-1"><a href="#cb155-1" aria-hidden="true" tabindex="-1"></a>pd.read_excel(<span class="st">"foo.xlsx"</span>, <span class="st">"Sheet1"</span>, index_col<span class="op">=</span><span class="va">None</span>, na_values<span class="op">=</span>[<span class="st">"NA"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="147">
+<div class="cell-output cell-output-display" data-execution_count="210">
 <div>
 
 
@@ -4230,42 +4223,42 @@ dtype: int64</code></pre>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
 <td>2000-01-01</td>
-<td>0.119829</td>
-<td>0.256524</td>
-<td>-0.021635</td>
-<td>-0.553218</td>
+<td>-0.269493</td>
+<td>1.081501</td>
+<td>0.603901</td>
+<td>-0.033339</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
 <td>2000-01-02</td>
-<td>-0.519971</td>
-<td>-0.113309</td>
-<td>0.710283</td>
-<td>0.269571</td>
+<td>1.242859</td>
+<td>1.376335</td>
+<td>0.566568</td>
+<td>-1.290247</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
 <td>2000-01-03</td>
-<td>-1.643742</td>
-<td>-0.387483</td>
-<td>0.172760</td>
-<td>0.842172</td>
+<td>3.420941</td>
+<td>1.899981</td>
+<td>1.670551</td>
+<td>-2.792631</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">3</td>
 <td>2000-01-04</td>
-<td>-1.505119</td>
-<td>0.233312</td>
-<td>-1.027990</td>
-<td>1.072677</td>
+<td>2.089820</td>
+<td>2.938649</td>
+<td>4.142323</td>
+<td>-2.180101</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">4</td>
 <td>2000-01-05</td>
-<td>-0.515360</td>
-<td>-0.130559</td>
-<td>-2.820043</td>
-<td>0.949913</td>
+<td>1.051018</td>
+<td>4.452224</td>
+<td>1.658182</td>
+<td>-0.738777</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">...</td>
@@ -4278,42 +4271,42 @@ dtype: int64</code></pre>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">995</td>
 <td>2002-09-22</td>
-<td>-12.310366</td>
-<td>41.116491</td>
-<td>38.013362</td>
-<td>39.133126</td>
+<td>-39.659784</td>
+<td>13.756241</td>
+<td>2.535603</td>
+<td>-22.950679</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">996</td>
 <td>2002-09-23</td>
-<td>-12.070904</td>
-<td>43.043589</td>
-<td>38.085873</td>
-<td>39.285890</td>
+<td>-41.912564</td>
+<td>15.577399</td>
+<td>2.390166</td>
+<td>-21.188588</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">997</td>
 <td>2002-09-24</td>
-<td>-11.423160</td>
-<td>42.627345</td>
-<td>39.041164</td>
-<td>40.857578</td>
+<td>-42.608957</td>
+<td>15.501803</td>
+<td>1.672575</td>
+<td>-21.438072</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">998</td>
 <td>2002-09-25</td>
-<td>-11.291670</td>
-<td>41.719354</td>
-<td>37.736052</td>
-<td>39.475829</td>
+<td>-42.864169</td>
+<td>15.232265</td>
+<td>1.771158</td>
+<td>-20.989292</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">999</td>
 <td>2002-09-26</td>
-<td>-10.932869</td>
-<td>39.653972</td>
-<td>36.900024</td>
-<td>40.507333</td>
+<td>-42.959411</td>
+<td>16.574275</td>
+<td>0.866194</td>
+<td>-19.453527</td>
 </tr>
 </tbody>
 </table>
