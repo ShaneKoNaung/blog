@@ -242,7 +242,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Comma Separated Values (CSV) files are used for storing tabular (spreadsheet like) data.</li>
 <li>Each line corresponds to one record and consists of several ( comma separated ) fields.</li>
 </ul>
-<div class="cell" hidden="true" data-execution_count="14">
+<div class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>data_path <span class="op">=</span> Path(<span class="st">'data'</span>)</span>
@@ -259,7 +259,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="st">NA,NA,140000'''</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>import <code>pandas</code> and load the dataset using <code>read_csv</code></p>
-<div class="cell" hidden="true" data-execution_count="15">
+<div class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.read_csv(data_file)</span>
@@ -277,7 +277,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>In supervised learning, we train models to predict a <code>target</code> value, given some sets of <code>input</code> values. Our first step in preprocessing the dataset is to separate out columns corresponding to <code>input</code> and columns corresponding to <code>target</code> values. We can select columns either</p>
 <pre><code>- by name or
 - by using integer-location based indexing (iloc)</code></pre>
-<div class="cell" hidden="true" data-execution_count="16">
+<div class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>inputs, targets <span class="op">=</span> data.iloc[:, <span class="dv">0</span>:<span class="dv">2</span>], data.iloc[:, <span class="dv">2</span>]</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Inputs </span><span class="ch">\n</span><span class="ss"> </span><span class="sc">{</span>inputs<span class="sc">}</span><span class="ch">\n</span><span class="ss">"</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Targets </span><span class="ch">\n</span><span class="ss"> </span><span class="sc">{</span>targets<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -304,7 +304,7 @@ Name: Price, dtype: int64</code></pre>
 </ul>
 <p>For categorical input fields like “RoofType”, we can treat <code>NaN</code> as a category.</p>
 <p>We can use <code>pd.get_dummies()</code> to convert this column into two separate columns.”RootType” column is now separated into “RoofType_Slate” and “RootType_nan”.</p>
-<div class="cell" hidden="true" data-execution_count="17">
+<div class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Before Imputation'</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(inputs)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -328,7 +328,7 @@ After Category Imputation
 </div>
 </div>
 <p>For numerical missing value, one common way is to replace <code>NaN</code> entries with the mean value of the corresponding column.</p>
-<div class="cell" hidden="true" data-execution_count="18">
+<div class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>inputs <span class="op">=</span> inputs.fillna(inputs.mean())</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(inputs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -343,7 +343,7 @@ After Category Imputation
 <section id="conversion-to-the-tensor-format" class="level2">
 <h2 class="anchored" data-anchor-id="conversion-to-the-tensor-format">Conversion to the tensor format</h2>
 <p>Now that we have separated inputs and targets columns, we can load them into a tensor.</p>
-<div class="cell" hidden="true" data-execution_count="19">
+<div class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>X, y <span class="op">=</span> torch.tensor(inputs.values), torch.tensor(targets.values)</span>
