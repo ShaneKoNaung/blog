@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://ShaneKoNaung.github.io/blog/posts/data_manipulation_d2l/2.1-Data_Manipulation.html</loc>
-    <lastmod>2023-07-19T22:29:55.093Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ShaneKoNaung.github.io/blog/index.html</loc>
-    <lastmod>2023-07-19T22:29:53.955Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ShaneKoNaung.github.io/blog/about.html</loc>
-    <lastmod>2023-07-19T22:29:53.522Z</lastmod>
+    <loc>https://ShaneKoNaung.github.io/blog/posts/pandas/2.2-Data_Preprocessing.html</loc>
+    <lastmod>2023-07-19T22:56:12.664Z</lastmod>
   </url>
   <url>
     <loc>https://ShaneKoNaung.github.io/blog/posts/mlflow/experiment_tracking.html</loc>
-    <lastmod>2023-07-19T22:29:54.518Z</lastmod>
+    <lastmod>2023-07-19T22:56:08.385Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ShaneKoNaung.github.io/blog/about.html</loc>
+    <lastmod>2023-07-19T22:56:07.323Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ShaneKoNaung.github.io/blog/index.html</loc>
+    <lastmod>2023-07-19T22:56:07.822Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ShaneKoNaung.github.io/blog/posts/data_manipulation_d2l/2.1-Data_Manipulation.html</loc>
+    <lastmod>2023-07-19T22:56:08.970Z</lastmod>
   </url>
 </urlset>
